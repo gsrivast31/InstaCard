@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  ICAppDelegate.h
 //  InstaCard
 //
 //  Created by GAURAV SRIVASTAVA on 16/11/14.
@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface ICAppDelegate : UIResponder <UIApplicationDelegate>
 
+@property (strong, nonatomic) UIWindow *window;
 
 @end
 

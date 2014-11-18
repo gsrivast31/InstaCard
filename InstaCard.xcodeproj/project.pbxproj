@@ -7,14 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F40E65971A1BD4FB00BFDBD1 /* ICCard.m in Sources */ = {isa = PBXBuildFile; fileRef = F40E65961A1BD4FB00BFDBD1 /* ICCard.m */; };
 		F43B9A001A18B40500CB8629 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B99FF1A18B40500CB8629 /* main.m */; };
-		F43B9A031A18B40500CB8629 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A021A18B40500CB8629 /* AppDelegate.m */; };
+		F43B9A031A18B40500CB8629 /* ICAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A021A18B40500CB8629 /* ICAppDelegate.m */; };
 		F43B9A061A18B40500CB8629 /* InstaCard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A041A18B40500CB8629 /* InstaCard.xcdatamodeld */; };
-		F43B9A091A18B40500CB8629 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A081A18B40500CB8629 /* ViewController.m */; };
+		F43B9A091A18B40500CB8629 /* ICCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A081A18B40500CB8629 /* ICCardViewController.m */; };
 		F43B9A0C1A18B40500CB8629 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F43B9A0A1A18B40500CB8629 /* Main.storyboard */; };
 		F43B9A0E1A18B40500CB8629 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F43B9A0D1A18B40500CB8629 /* Images.xcassets */; };
 		F43B9A111A18B40500CB8629 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F43B9A0F1A18B40500CB8629 /* LaunchScreen.xib */; };
 		F43B9A1D1A18B40500CB8629 /* InstaCardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A1C1A18B40500CB8629 /* InstaCardTests.m */; };
+		F43B9A291A18B82200CB8629 /* ICCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A281A18B82200CB8629 /* ICCoreDataStack.m */; };
+		F43B9A2D1A1918E800CB8629 /* ICCardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A2C1A1918E800CB8629 /* ICCardDetailViewController.m */; };
+		F43B9A301A19197100CB8629 /* ICCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A2F1A19197100CB8629 /* ICCardCell.m */; };
+		F4F29B4D1A1A50DA00A14CD6 /* ICUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F29B4C1A1A50DA00A14CD6 /* ICUtils.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,20 +33,30 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F40E65951A1BD4FB00BFDBD1 /* ICCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCard.h; sourceTree = "<group>"; };
+		F40E65961A1BD4FB00BFDBD1 /* ICCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCard.m; sourceTree = "<group>"; };
 		F43B99FA1A18B40500CB8629 /* InstaCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43B99FE1A18B40500CB8629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F43B99FF1A18B40500CB8629 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		F43B9A011A18B40500CB8629 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		F43B9A021A18B40500CB8629 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F43B9A011A18B40500CB8629 /* ICAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICAppDelegate.h; sourceTree = "<group>"; };
+		F43B9A021A18B40500CB8629 /* ICAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICAppDelegate.m; sourceTree = "<group>"; };
 		F43B9A051A18B40500CB8629 /* InstaCard.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = InstaCard.xcdatamodel; sourceTree = "<group>"; };
-		F43B9A071A18B40500CB8629 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		F43B9A081A18B40500CB8629 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		F43B9A071A18B40500CB8629 /* ICCardViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICCardViewController.h; sourceTree = "<group>"; };
+		F43B9A081A18B40500CB8629 /* ICCardViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ICCardViewController.m; sourceTree = "<group>"; };
 		F43B9A0B1A18B40500CB8629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F43B9A0D1A18B40500CB8629 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		F43B9A101A18B40500CB8629 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F43B9A161A18B40500CB8629 /* InstaCardTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = InstaCardTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43B9A1B1A18B40500CB8629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F43B9A1C1A18B40500CB8629 /* InstaCardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InstaCardTests.m; sourceTree = "<group>"; };
+		F43B9A281A18B82200CB8629 /* ICCoreDataStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCoreDataStack.m; sourceTree = "<group>"; };
+		F43B9A2A1A18B84A00CB8629 /* ICCoreDataStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICCoreDataStack.h; sourceTree = "<group>"; };
+		F43B9A2B1A1918E800CB8629 /* ICCardDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardDetailViewController.h; sourceTree = "<group>"; };
+		F43B9A2C1A1918E800CB8629 /* ICCardDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardDetailViewController.m; sourceTree = "<group>"; };
+		F43B9A2E1A19197100CB8629 /* ICCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardCell.h; sourceTree = "<group>"; };
+		F43B9A2F1A19197100CB8629 /* ICCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardCell.m; sourceTree = "<group>"; };
+		F4F29B4B1A1A50DA00A14CD6 /* ICUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICUtils.h; sourceTree = "<group>"; };
+		F4F29B4C1A1A50DA00A14CD6 /* ICUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICUtils.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,15 +98,25 @@
 		F43B99FC1A18B40500CB8629 /* InstaCard */ = {
 			isa = PBXGroup;
 			children = (
-				F43B9A011A18B40500CB8629 /* AppDelegate.h */,
-				F43B9A021A18B40500CB8629 /* AppDelegate.m */,
-				F43B9A071A18B40500CB8629 /* ViewController.h */,
-				F43B9A081A18B40500CB8629 /* ViewController.m */,
+				F43B9A011A18B40500CB8629 /* ICAppDelegate.h */,
+				F43B9A021A18B40500CB8629 /* ICAppDelegate.m */,
+				F43B9A071A18B40500CB8629 /* ICCardViewController.h */,
+				F43B9A081A18B40500CB8629 /* ICCardViewController.m */,
 				F43B9A0A1A18B40500CB8629 /* Main.storyboard */,
 				F43B9A0D1A18B40500CB8629 /* Images.xcassets */,
 				F43B9A0F1A18B40500CB8629 /* LaunchScreen.xib */,
 				F43B9A041A18B40500CB8629 /* InstaCard.xcdatamodeld */,
+				F43B9A2A1A18B84A00CB8629 /* ICCoreDataStack.h */,
+				F43B9A281A18B82200CB8629 /* ICCoreDataStack.m */,
 				F43B99FD1A18B40500CB8629 /* Supporting Files */,
+				F43B9A2B1A1918E800CB8629 /* ICCardDetailViewController.h */,
+				F43B9A2C1A1918E800CB8629 /* ICCardDetailViewController.m */,
+				F43B9A2E1A19197100CB8629 /* ICCardCell.h */,
+				F43B9A2F1A19197100CB8629 /* ICCardCell.m */,
+				F4F29B4B1A1A50DA00A14CD6 /* ICUtils.h */,
+				F4F29B4C1A1A50DA00A14CD6 /* ICUtils.m */,
+				F40E65951A1BD4FB00BFDBD1 /* ICCard.h */,
+				F40E65961A1BD4FB00BFDBD1 /* ICCard.m */,
 			);
 			path = InstaCard;
 			sourceTree = "<group>";
@@ -223,8 +248,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				F43B9A061A18B40500CB8629 /* InstaCard.xcdatamodeld in Sources */,
-				F43B9A031A18B40500CB8629 /* AppDelegate.m in Sources */,
-				F43B9A091A18B40500CB8629 /* ViewController.m in Sources */,
+				F40E65971A1BD4FB00BFDBD1 /* ICCard.m in Sources */,
+				F43B9A2D1A1918E800CB8629 /* ICCardDetailViewController.m in Sources */,
+				F43B9A031A18B40500CB8629 /* ICAppDelegate.m in Sources */,
+				F43B9A091A18B40500CB8629 /* ICCardViewController.m in Sources */,
+				F43B9A291A18B82200CB8629 /* ICCoreDataStack.m in Sources */,
+				F4F29B4D1A1A50DA00A14CD6 /* ICUtils.m in Sources */,
+				F43B9A301A19197100CB8629 /* ICCardCell.m in Sources */,
 				F43B9A001A18B40500CB8629 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -416,6 +446,7 @@
 				F43B9A221A18B40500CB8629 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		F43B9A231A18B40500CB8629 /* Build configuration list for PBXNativeTarget "InstaCardTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +455,7 @@
 				F43B9A251A18B40500CB8629 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -1,17 +1,16 @@
 //
-//  AppDelegate.h
+//  ICCoreDataStack.h
 //  InstaCard
 //
 //  Created by GAURAV SRIVASTAVA on 16/11/14.
 //  Copyright (c) 2014 GAURAV SRIVASTAVA. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface ICCoreDataStack : NSObject
 
-@property (strong, nonatomic) UIWindow *window;
++ (instancetype)defaultStack;
 
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
@@ -20,6 +19,4 @@
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
-
 @end
-
