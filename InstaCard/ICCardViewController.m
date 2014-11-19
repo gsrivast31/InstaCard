@@ -10,6 +10,7 @@
 #import "ICCoreDataStack.h"
 #import "ICCard.h"
 #import "ICCardDetailViewController.h"
+#import "ICCardEditViewController.h"
 #import "ICCardCell.h"
 #import "ICUtils.h"
 
@@ -27,15 +28,17 @@ static NSString *kShowDetailSegueID = @"showDetail";
 
 static NSString *kCardViewControllerStoryBoardID = @"cardViewController";
 static NSString *kCardDetailViewControllerStoryBoardID = @"cardDetailViewController";
+static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController";
 
 - (void)viewWillAppear:(BOOL)animated {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
-    //CGFloat screenHeight = screenRect.size.height;
+    CGFloat screenHeight = screenRect.size.height - self.navigationController.navigationBar.frame.size.height;
     
-    CGFloat itemDimensions = (screenWidth)/3.0;
+    CGFloat itemWidth = (screenWidth)/3.0;
+    CGFloat itemHeight = (screenHeight)/4.0;
     UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.collectionViewLayout;
-    layout.itemSize = CGSizeMake(itemDimensions, itemDimensions);
+    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
     layout.minimumInteritemSpacing = 0.0;
     layout.minimumLineSpacing = 0.0;
 }
@@ -83,42 +86,60 @@ static NSString *kCardDetailViewControllerStoryBoardID = @"cardDetailViewControl
     self.title = title;
 }
 
-- (void) addDefaultCard:(NSString*)name type:(ICCardType)type inContext:(NSManagedObjectContext*)context {
+- (void) addDefaultCard:(NSString*)name icon:(NSString*)iconName type:(ICCardType)type inContext:(NSManagedObjectContext*)context {
     ICCard *cardData = [NSEntityDescription insertNewObjectForEntityForName:kCardEntity inManagedObjectContext:context];
     cardData.cardName = name;
     cardData.type = type;
+    cardData.iconName = iconName;
     cardData.createdAt = [[NSDate date] timeIntervalSince1970];
 }
 
 - (void)insertDefaultPersonalCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"PAN Card" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Passport" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Aaadhar Card" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Driver's License" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Insurance Card" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Ration Card" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Voter ID Card" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Membership Card" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Credit Cards" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Debit Cards" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Loyalty Cards" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Policies" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"PAN Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Passport" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Aaadhar Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Driver's License" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Insurance Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Ration Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Voter ID Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Membership Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Credit Cards" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Debit Cards" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Loyalty Cards" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Policies" icon:@"bank-mini-white" type:ICPersonal inContext:context];
 }
 
 - (void)insertDefaultLoyaltyCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"Apollo Pharmacy" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Apollo Pharmacy" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Body Shop" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Crossword" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Hypercity" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Jet Privilege" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Louis Phillippe" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Marks & Spencers" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Reliance" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Religare" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Shoppers Stop" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Van Heusen" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Westside" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
 }
 
 - (void)insertDefaultPolicyCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"PPF" type:ICPolicy inContext:context];
+    [self addDefaultCard:@"PPF" icon:@"bank-mini-white" type:ICPolicy inContext:context];
+    [self addDefaultCard:@"Mutual Funds" icon:@"bank-mini-white" type:ICPolicy inContext:context];
+    [self addDefaultCard:@"NSC" icon:@"bank-mini-white" type:ICPolicy inContext:context];
 }
 
 - (void)insertDefaultBankDebitCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"SBI Debit Card" type:ICBankDebit inContext:context];
+    [self addDefaultCard:@"SBI" icon:@"bank-mini-white" type:ICBankDebit inContext:context];
+    [self addDefaultCard:@"HDFC" icon:@"bank-mini-white" type:ICBankDebit inContext:context];
+    [self addDefaultCard:@"ICICI" icon:@"bank-mini-white" type:ICBankDebit inContext:context];
 }
 
 - (void)insertDefaultBankCreditCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"SBI Credit Card" type:ICBankCredit inContext:context];
+    [self addDefaultCard:@"SBI" icon:@"bank-mini-white" type:ICBankCredit inContext:context];
+    [self addDefaultCard:@"HDFC" icon:@"bank-mini-white" type:ICBankCredit inContext:context];
+    [self addDefaultCard:@"ICICI" icon:@"bank-mini-white" type:ICBankCredit inContext:context];
 }
 
 - (void)insertDefaultData {
@@ -355,10 +376,9 @@ static NSString *kCardDetailViewControllerStoryBoardID = @"cardDetailViewControl
 }
 
 - (IBAction)addCard:(id)sender {
-    ICCardDetailViewController* cardDetailController = [self.storyboard instantiateViewControllerWithIdentifier:kCardDetailViewControllerStoryBoardID];
-    cardDetailController.card = nil;
-    [cardDetailController setCardType:_viewType];
-    [self.navigationController pushViewController:cardDetailController animated:YES];
-
+    ICCardEditViewController* addCardController = [self.storyboard instantiateViewControllerWithIdentifier:kCardEditViewControllerStoryBoardID];
+    addCardController.card = nil;
+    [addCardController setCardType:_viewType];
+    [self.navigationController pushViewController:addCardController animated:YES];
 }
 @end
