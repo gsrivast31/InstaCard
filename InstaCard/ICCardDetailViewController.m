@@ -9,8 +9,9 @@
 #import "ICCardDetailViewController.h"
 #import "ICCard.h"
 #import "ICCardEditViewController.h"
+#import "ICCoreDataStack.h"
 
-@interface ICCardDetailViewController ()
+@interface ICCardDetailViewController () <UIActionSheetDelegate>
 
 @end
 
@@ -69,10 +70,16 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     [self setRightBarButtonItems];
 }
 
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
 - (void)setRightBarButtonItems {
     UIBarButtonItem* editButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit"] style:UIBarButtonItemStylePlain target:self action:@selector(editCard)];
     
-    UIBarButtonItem* shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(shareCard)];
+    UIBarButtonItem* shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareCard)];
     
     UIBarButtonItem* deleteButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteCard)];
     
@@ -90,17 +97,36 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 //    [self presentViewController:addCardController animated:YES completion:nil];
 }
 
-- (void) shareCard {
-    
-}
-
 - (void) deleteCard {
+    [[[ICCoreDataStack defaultStack] managedObjectContext] deleteObject:self.card];
+    [[ICCoreDataStack defaultStack] saveContext];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)shareCard {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose an action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Export to PDF", @"Email Card", nil];
+    
+    [actionSheet showInView:self.view];
+}
+
+- (void)exportToPDF {
     
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)emailCard {
+    
+}
+
+#pragma mark UIActionSheetDelegate
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != actionSheet.cancelButtonIndex) {
+        if (buttonIndex == actionSheet.firstOtherButtonIndex) {
+            [self exportToPDF];
+        } else {
+            [self emailCard];
+        }
+    }
 }
 
 @end
