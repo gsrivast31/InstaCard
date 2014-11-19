@@ -377,98 +377,143 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No person name specified" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezR-el-wQZ">
-                                <rect key="frame" x="220" y="47" width="163" height="28"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6xz-dW-4Cl" userLabel="Card View">
+                                <rect key="frame" x="26" y="30" width="548" height="150"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No person name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ezR-el-wQZ">
+                                        <rect key="frame" x="10" y="20" width="144" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="144" id="sK2-Th-nSM"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No card number specified" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqv-gF-AlG">
+                                        <rect key="frame" x="10" y="63" width="528" height="24"/>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No start date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiW-CL-Cdc">
+                                        <rect key="frame" x="10" y="106" width="150" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="Y3d-bP-z0G"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No end date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikF-IM-TPc">
+                                        <rect key="frame" x="398" y="106" width="140" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="140" id="aDe-tw-5te"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No card name" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6VR-dP-PZJ">
+                                        <rect key="frame" x="388" y="20" width="150" height="24"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="fzI-Qt-UjZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="15"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.35550820707070707" green="0.35550820707070707" blue="0.35550820707070707" alpha="0.45000000000000001" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="OR1-Lc-2na"/>
+                                    <constraint firstAttribute="centerX" secondItem="mqv-gF-AlG" secondAttribute="centerX" id="1N5-BN-PBl"/>
+                                    <constraint firstAttribute="centerY" secondItem="mqv-gF-AlG" secondAttribute="centerY" id="ERB-6Z-wbt"/>
+                                    <constraint firstAttribute="centerY" secondItem="mqv-gF-AlG" secondAttribute="centerY" constant="-1" id="FI0-ne-BEx"/>
+                                    <constraint firstItem="aiW-CL-Cdc" firstAttribute="leading" secondItem="6xz-dW-4Cl" secondAttribute="leading" constant="10" id="GOs-Gk-na8"/>
+                                    <constraint firstAttribute="height" constant="150" id="KYo-FZ-jXM"/>
+                                    <constraint firstAttribute="trailing" secondItem="ikF-IM-TPc" secondAttribute="trailing" constant="10" id="NUJ-vv-YmE"/>
+                                    <constraint firstAttribute="bottom" secondItem="aiW-CL-Cdc" secondAttribute="bottom" constant="20" id="QhH-MV-vAc"/>
+                                    <constraint firstAttribute="bottom" secondItem="ikF-IM-TPc" secondAttribute="bottom" constant="20" id="VfN-G4-nck"/>
+                                    <constraint firstItem="6VR-dP-PZJ" firstAttribute="top" secondItem="6xz-dW-4Cl" secondAttribute="top" constant="20" id="Xme-Wo-brj"/>
+                                    <constraint firstItem="ezR-el-wQZ" firstAttribute="leading" secondItem="6xz-dW-4Cl" secondAttribute="leading" constant="10" id="eGC-Td-UuM"/>
+                                    <constraint firstAttribute="trailing" secondItem="6VR-dP-PZJ" secondAttribute="trailing" constant="10" id="jNN-do-UtL"/>
+                                    <constraint firstAttribute="trailing" secondItem="mqv-gF-AlG" secondAttribute="trailing" constant="10" id="llQ-zB-d2O"/>
+                                    <constraint firstItem="mqv-gF-AlG" firstAttribute="leading" secondItem="6xz-dW-4Cl" secondAttribute="leading" constant="10" id="uzk-PI-eU5"/>
+                                    <constraint firstItem="ezR-el-wQZ" firstAttribute="top" secondItem="6xz-dW-4Cl" secondAttribute="top" constant="20" id="vKt-g9-gIE"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No card name specified" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6VR-dP-PZJ">
-                                <rect key="frame" x="226" y="99" width="150" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="72" id="LTv-Ig-E91"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="1N5-BN-PBl"/>
+                                        <exclude reference="FI0-ne-BEx"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="puU-wW-hl6">
-                                <rect key="frame" x="31" y="304" width="538" height="276"/>
+                                <rect key="frame" x="26" y="190" width="548" height="400"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="R5A-jd-DuA">
-                                        <rect key="frame" x="0.0" y="0.0" width="261" height="276"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="269" height="400"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lo2-hB-VlT">
-                                        <rect key="frame" x="280" y="0.0" width="264" height="276"/>
+                                        <rect key="frame" x="279" y="0.0" width="269" height="400"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="Lo2-hB-VlT" firstAttribute="top" secondItem="puU-wW-hl6" secondAttribute="top" id="2fz-M1-T2r"/>
-                                    <constraint firstAttribute="trailing" secondItem="Lo2-hB-VlT" secondAttribute="trailing" constant="-6" id="6Kl-tV-qzq"/>
                                     <constraint firstItem="R5A-jd-DuA" firstAttribute="leading" secondItem="puU-wW-hl6" secondAttribute="leading" id="ALc-HA-XZE"/>
                                     <constraint firstAttribute="bottom" secondItem="R5A-jd-DuA" secondAttribute="bottom" id="GXo-XY-rxw"/>
-                                    <constraint firstItem="Lo2-hB-VlT" firstAttribute="width" secondItem="R5A-jd-DuA" secondAttribute="width" constant="3" id="HR5-0L-2sn"/>
+                                    <constraint firstItem="R5A-jd-DuA" firstAttribute="leading" secondItem="puU-wW-hl6" secondAttribute="leading" id="Hv6-tA-qso"/>
+                                    <constraint firstAttribute="bottom" secondItem="Lo2-hB-VlT" secondAttribute="bottom" id="Q3f-Qm-49Z"/>
+                                    <constraint firstAttribute="trailing" secondItem="Lo2-hB-VlT" secondAttribute="trailing" id="QUb-pb-bcf"/>
+                                    <constraint firstItem="Lo2-hB-VlT" firstAttribute="width" secondItem="R5A-jd-DuA" secondAttribute="width" id="Sk2-xI-1TF"/>
                                     <constraint firstItem="Lo2-hB-VlT" firstAttribute="leading" secondItem="R5A-jd-DuA" secondAttribute="trailing" constant="16" id="Tzt-dU-sR1"/>
+                                    <constraint firstAttribute="bottom" secondItem="R5A-jd-DuA" secondAttribute="bottom" id="Vu7-MR-Utm"/>
+                                    <constraint firstItem="R5A-jd-DuA" firstAttribute="top" secondItem="puU-wW-hl6" secondAttribute="top" id="bmG-Pg-8Aa"/>
                                     <constraint firstItem="R5A-jd-DuA" firstAttribute="top" secondItem="puU-wW-hl6" secondAttribute="top" id="fG8-xI-jiq"/>
-                                    <constraint firstItem="Lo2-hB-VlT" firstAttribute="leading" secondItem="R5A-jd-DuA" secondAttribute="trailing" constant="19" id="hr7-mG-eMB"/>
-                                    <constraint firstAttribute="bottom" secondItem="Lo2-hB-VlT" secondAttribute="bottom" id="ppO-Oq-3ad"/>
+                                    <constraint firstItem="Lo2-hB-VlT" firstAttribute="leading" secondItem="R5A-jd-DuA" secondAttribute="trailing" constant="10" id="ig8-cN-Kn0"/>
+                                    <constraint firstItem="Lo2-hB-VlT" firstAttribute="top" secondItem="puU-wW-hl6" secondAttribute="top" id="oP1-lO-fWQ"/>
+                                    <constraint firstItem="Lo2-hB-VlT" firstAttribute="leading" secondItem="R5A-jd-DuA" secondAttribute="trailing" constant="19" id="vTg-4b-1w5"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="ALc-HA-XZE"/>
+                                        <exclude reference="GXo-XY-rxw"/>
+                                        <exclude reference="fG8-xI-jiq"/>
                                         <exclude reference="Tzt-dU-sR1"/>
+                                        <exclude reference="vTg-4b-1w5"/>
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No card number specified" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mqv-gF-AlG">
-                                <rect key="frame" x="220" y="151" width="162" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="ZQF-Qe-DGF"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No start date specified" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aiW-CL-Cdc">
-                                <rect key="frame" x="230" y="203" width="144" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="JTP-vJ-TYl"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No end date specified" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ikF-IM-TPc">
-                                <rect key="frame" x="234" y="255" width="136" height="28"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Il8-z9-IpH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="mqv-gF-AlG" firstAttribute="top" secondItem="6VR-dP-PZJ" secondAttribute="bottom" constant="24" id="0Y9-bz-zys"/>
-                            <constraint firstItem="puU-wW-hl6" firstAttribute="top" secondItem="ikF-IM-TPc" secondAttribute="bottom" constant="21" id="41d-E5-JZD"/>
-                            <constraint firstAttribute="centerX" secondItem="mqv-gF-AlG" secondAttribute="centerX" constant="-1" id="84C-Ka-1QB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6xz-dW-4Cl" secondAttribute="trailing" constant="10" id="7xJ-8w-dAz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6xz-dW-4Cl" secondAttribute="trailing" constant="10" id="CbR-xh-q2g"/>
+                            <constraint firstItem="6xz-dW-4Cl" firstAttribute="top" secondItem="Ulv-g5-K7b" secondAttribute="bottom" constant="10" id="D17-Cb-ivO"/>
+                            <constraint firstItem="6xz-dW-4Cl" firstAttribute="leading" secondItem="v9n-hS-Xmh" secondAttribute="leadingMargin" constant="10" id="Ef5-Cp-4dt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="puU-wW-hl6" secondAttribute="trailing" constant="15" id="FSR-3i-dCa"/>
                             <constraint firstItem="puU-wW-hl6" firstAttribute="leading" secondItem="v9n-hS-Xmh" secondAttribute="leadingMargin" constant="15" id="FUZ-Ms-Dxv"/>
-                            <constraint firstAttribute="centerX" secondItem="ezR-el-wQZ" secondAttribute="centerX" constant="-1" id="I5z-me-Ee5"/>
-                            <constraint firstItem="aiW-CL-Cdc" firstAttribute="top" secondItem="mqv-gF-AlG" secondAttribute="bottom" constant="24" id="PQs-uu-Phl"/>
-                            <constraint firstItem="ikF-IM-TPc" firstAttribute="top" secondItem="aiW-CL-Cdc" secondAttribute="bottom" constant="24" id="XiN-U0-weh"/>
-                            <constraint firstAttribute="centerX" secondItem="6VR-dP-PZJ" secondAttribute="centerX" constant="-1" id="ZDY-Wg-OON"/>
-                            <constraint firstAttribute="centerX" secondItem="aiW-CL-Cdc" secondAttribute="centerX" constant="-1.5" id="cXw-LH-C0s"/>
                             <constraint firstItem="bXO-5w-H6i" firstAttribute="top" secondItem="puU-wW-hl6" secondAttribute="bottom" constant="20" id="fbe-TS-Pko"/>
-                            <constraint firstAttribute="centerX" secondItem="ikF-IM-TPc" secondAttribute="centerX" constant="-1.5" id="isu-Tv-f2n"/>
-                            <constraint firstItem="6VR-dP-PZJ" firstAttribute="top" secondItem="ezR-el-wQZ" secondAttribute="bottom" constant="24" id="k60-nu-9KP"/>
-                            <constraint firstItem="ezR-el-wQZ" firstAttribute="top" secondItem="Ulv-g5-K7b" secondAttribute="bottom" constant="27" id="x1X-63-uOl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="puU-wW-hl6" secondAttribute="trailing" constant="10" id="iOw-ge-gAu"/>
+                            <constraint firstItem="puU-wW-hl6" firstAttribute="leading" secondItem="v9n-hS-Xmh" secondAttribute="leadingMargin" constant="10" id="iZs-gG-xzc"/>
+                            <constraint firstItem="bXO-5w-H6i" firstAttribute="top" secondItem="puU-wW-hl6" secondAttribute="bottom" constant="10" id="kbW-Fi-Y90"/>
+                            <constraint firstItem="6xz-dW-4Cl" firstAttribute="leading" secondItem="v9n-hS-Xmh" secondAttribute="leadingMargin" constant="10" id="mc0-0K-pLv"/>
+                            <constraint firstAttribute="centerX" secondItem="6xz-dW-4Cl" secondAttribute="centerX" id="mlU-m6-0MX"/>
+                            <constraint firstAttribute="centerX" secondItem="6xz-dW-4Cl" secondAttribute="centerX" constant="-4" id="rfH-Ts-Eya"/>
+                            <constraint firstItem="puU-wW-hl6" firstAttribute="top" secondItem="6xz-dW-4Cl" secondAttribute="bottom" constant="10" id="wbo-mQ-NpD"/>
                             <constraint firstAttribute="centerX" secondItem="puU-wW-hl6" secondAttribute="centerX" id="xqO-pQ-8lc"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="7xJ-8w-dAz"/>
+                                <exclude reference="mc0-0K-pLv"/>
+                                <exclude reference="mlU-m6-0MX"/>
+                                <exclude reference="rfH-Ts-Eya"/>
+                                <exclude reference="FSR-3i-dCa"/>
+                                <exclude reference="FUZ-Ms-Dxv"/>
+                                <exclude reference="xqO-pQ-8lc"/>
+                                <exclude reference="fbe-TS-Pko"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="backImageView" destination="Lo2-hB-VlT" id="0jD-Pr-6fZ"/>
