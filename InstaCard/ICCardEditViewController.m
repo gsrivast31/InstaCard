@@ -23,6 +23,9 @@
 static NSString *kCardEntity = @"ICCard";
 
 @synthesize card = _card;
+@synthesize frontImage = _frontImage;
+@synthesize backImage = _backImage;
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -37,10 +40,16 @@ static NSString *kCardEntity = @"ICCard";
         self.personTextField.text = self.card.name;
         
         if (self.card.frontImage) {
-            [self.frontImageView setImage:[UIImage imageWithData:self.card.frontImage]];
+            self.frontImage = [UIImage imageWithData:self.card.frontImage];
+            [self.frontImageView setImage:self.frontImage];
+        } else {
+            [self.frontImageView setImage:[UIImage imageNamed:@"camera-white"]];
         }
         if (self.card.backImage) {
-            [self.endImageView setImage:[UIImage imageWithData:self.card.backImage]];
+            self.backImage = [UIImage imageWithData:self.card.backImage];
+            [self.backImageView setImage:self.backImage];
+        } else {
+            [self.backImageView setImage:[UIImage imageNamed:@"camera-white"]];
         }
         if (self.card.startDate) {
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.card.startDate];
@@ -66,12 +75,18 @@ static NSString *kCardEntity = @"ICCard";
         }
     } else {
         self.title = @"Add New Card";
+        [self.frontImageView setImage:[UIImage imageNamed:@"camera-white"]];
+        [self.backImageView setImage:[UIImage imageNamed:@"camera-white"]];
     }
     
-    UITapGestureRecognizer* frontTouchGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editFrontImage)];
+    UITapGestureRecognizer* frontTouchGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editFrontImage:)];
+    [frontTouchGesture setNumberOfTapsRequired:1];
+    [self.frontImageView setUserInteractionEnabled:YES];
     [self.frontImageView addGestureRecognizer:frontTouchGesture];
-    UITapGestureRecognizer* backTouchGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editBackImage)];
-    [self.endImageView addGestureRecognizer:backTouchGesture];
+    UITapGestureRecognizer* backTouchGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editBackImage:)];
+    [backTouchGesture setNumberOfTapsRequired:1];
+    [self.backImageView setUserInteractionEnabled:YES];
+    [self.backImageView addGestureRecognizer:backTouchGesture];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -97,8 +112,8 @@ static NSString *kCardEntity = @"ICCard";
     if (self.frontImageView.image) {
         newCard.frontImage = UIImageJPEGRepresentation(self.frontImageView.image, 0.75);
     }
-    if (self.endImageView.image) {
-        newCard.backImage = UIImageJPEGRepresentation(self.endImageView.image, 0.75);
+    if (self.backImageView.image) {
+        newCard.backImage = UIImageJPEGRepresentation(self.backImageView.image, 0.75);
     }
     
     if (self.startDDTextField.text && self.startMMTextField.text && self.startYYTextField.text) {
@@ -134,8 +149,8 @@ static NSString *kCardEntity = @"ICCard";
     if (self.frontImageView.image) {
         self.card.frontImage = UIImageJPEGRepresentation(self.frontImageView.image, 0.75);
     }
-    if (self.endImageView.image) {
-        self.card.backImage = UIImageJPEGRepresentation(self.endImageView.image, 0.75);
+    if (self.backImageView.image) {
+        self.card.backImage = UIImageJPEGRepresentation(self.backImageView.image, 0.75);
     }
 
     if (self.startDDTextField.text && self.startMMTextField.text && self.startYYTextField.text) {
@@ -216,15 +231,13 @@ static NSString *kCardEntity = @"ICCard";
     }
 }
 
-//- (IBAction)editBackImage:(id)sender {
-- (void)editBackImage {
+- (void)editBackImage:(UITapGestureRecognizer*)gesture {
     _editingFrontImage = FALSE;
     _editingBackImage = TRUE;
     [self promptForImage];
 }
 
-//- (IBAction)editFrontImage:(id)sender {
-- (void)editFrontImage {
+- (void)editFrontImage:(UITapGestureRecognizer*)gesture {
     _editingFrontImage = TRUE;
     _editingBackImage = FALSE;
     [self promptForImage];
@@ -236,9 +249,11 @@ static NSString *kCardEntity = @"ICCard";
     UIImage *image = info[UIImagePickerControllerOriginalImage];
     
     if (_editingFrontImage == TRUE) {
+        self.frontImage = image;
         [self.frontImageView setImage:image];
     } else if (_editingBackImage == TRUE) {
-        [self.endImageView setImage:image];
+        self.backImage = image;
+        [self.backImageView setImage:image];
     }
     
     _editingFrontImage = _editingBackImage = FALSE;

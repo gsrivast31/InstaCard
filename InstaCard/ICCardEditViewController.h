@@ -24,16 +24,13 @@
 @property (weak, nonatomic) IBOutlet UITextField *endDDTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endMMTextField;
 @property (weak, nonatomic) IBOutlet UITextField *endYYTextField;
-
 @property (weak, nonatomic) IBOutlet UIImageView *frontImageView;
-@property (weak, nonatomic) IBOutlet UIImageView *endImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+
+@property (nonatomic, strong) UIImage *frontImage;
+@property (nonatomic, strong) UIImage *backImage;
 
 - (IBAction)saveCard:(id)sender;
-
-- (void)editFrontImage;
-- (void)editBackImage;
-//- (IBAction)editBackImage:(id)sender;
-//- (IBAction)editFrontImage:(id)sender;
 
 - (void)setCardType:(ICCardType)type;
 

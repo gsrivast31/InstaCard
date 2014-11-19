@@ -169,7 +169,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QBQ-0o-hF7">
                                 <rect key="frame" x="165" y="303" width="270" height="160"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5C-qo-zi4">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5C-qo-zi4">
                                         <rect key="frame" x="10" y="10" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.75749966081442577" green="0.77607337250475872" blue="0.83179450757575757" alpha="0.96999999999999997" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -177,8 +177,13 @@
                                             <constraint firstAttribute="height" constant="120" id="qB7-7Z-iPa"/>
                                             <constraint firstAttribute="width" constant="120" id="yuH-P9-ApO"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="nnv-n8-Bzu"/>
+                                            </mask>
+                                        </variation>
                                     </imageView>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LQD-So-hbJ">
+                                    <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LQD-So-hbJ">
                                         <rect key="frame" x="142" y="10" width="120" height="120"/>
                                         <color key="backgroundColor" red="0.75749966081442577" green="0.77607337250475872" blue="0.83179450757575757" alpha="0.96999999999999997" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -343,11 +348,13 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="backImageView" destination="LQD-So-hbJ" id="I14-Lp-q8I"/>
                         <outlet property="cardNumbeTextField" destination="4FS-wl-ICw" id="rCR-Zf-rt9"/>
                         <outlet property="cardTextField" destination="EGr-Wp-dwr" id="ROd-6N-Bq9"/>
                         <outlet property="endDDTextField" destination="WGK-zA-yHP" id="naL-Fd-RVT"/>
                         <outlet property="endMMTextField" destination="gDp-4Q-Hyh" id="j2t-kn-nLU"/>
                         <outlet property="endYYTextField" destination="7b9-vI-JjN" id="aYk-iH-PTE"/>
+                        <outlet property="frontImageView" destination="c5C-qo-zi4" id="eTq-hR-2ve"/>
                         <outlet property="personTextField" destination="Yoa-Eo-aH1" id="2vM-M7-BfT"/>
                         <outlet property="startDDTextField" destination="wUT-YA-rQh" id="WmS-9z-bCd"/>
                         <outlet property="startMMTextField" destination="Oa6-WS-V9B" id="sBT-we-199"/>
