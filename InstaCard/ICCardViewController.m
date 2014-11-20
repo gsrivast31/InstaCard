@@ -97,51 +97,51 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 }
 
 - (void)insertDefaultPersonalCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"PAN Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Passport" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Aaadhar Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Driver's License" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Insurance Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Ration Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Voter ID Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Membership Card" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Credit Cards" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Debit Cards" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Loyalty Cards" icon:@"bank-mini-white" type:ICPersonal inContext:context];
-    [self addDefaultCard:@"Policies" icon:@"bank-mini-white" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"PAN Card" icon:@"pan" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Passport" icon:@"passport" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Aaadhar Card" icon:@"aadhar" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Driver's License" icon:@"driving" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Insurance Card" icon:@"insurance" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Ration Card" icon:@"ration" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Voter ID Card" icon:@"voter" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Membership Card" icon:@"membership" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Credit Cards" icon:@"credit" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Debit Cards" icon:@"debit" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Loyalty Cards" icon:@"loyalty" type:ICPersonal inContext:context];
+    [self addDefaultCard:@"Policies" icon:@"policies" type:ICPersonal inContext:context];
 }
 
 - (void)insertDefaultLoyaltyCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"Apollo Pharmacy" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Body Shop" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Crossword" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Hypercity" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Jet Privilege" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Louis Phillippe" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Marks & Spencers" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Reliance" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Religare" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Shoppers Stop" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Van Heusen" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Westside" icon:@"bank-mini-white" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Apollo Pharmacy" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Body Shop" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Crossword" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Hypercity" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Jet Privilege" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Louis Phillippe" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Marks & Spencers" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Reliance" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Religare" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Shoppers Stop" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Van Heusen" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Westside" icon:@"loyalty" type:ICLoyalty inContext:context];
 }
 
 - (void)insertDefaultPolicyCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"PPF" icon:@"bank-mini-white" type:ICPolicy inContext:context];
-    [self addDefaultCard:@"Mutual Funds" icon:@"bank-mini-white" type:ICPolicy inContext:context];
-    [self addDefaultCard:@"NSC" icon:@"bank-mini-white" type:ICPolicy inContext:context];
+    [self addDefaultCard:@"PPF" icon:@"policies" type:ICPolicy inContext:context];
+    [self addDefaultCard:@"Mutual Funds" icon:@"policies" type:ICPolicy inContext:context];
+    [self addDefaultCard:@"NSC" icon:@"policies" type:ICPolicy inContext:context];
 }
 
 - (void)insertDefaultBankDebitCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"SBI" icon:@"bank-mini-white" type:ICBankDebit inContext:context];
-    [self addDefaultCard:@"HDFC" icon:@"bank-mini-white" type:ICBankDebit inContext:context];
-    [self addDefaultCard:@"ICICI" icon:@"bank-mini-white" type:ICBankDebit inContext:context];
+    [self addDefaultCard:@"SBI" icon:@"debit" type:ICBankDebit inContext:context];
+    [self addDefaultCard:@"HDFC" icon:@"debit" type:ICBankDebit inContext:context];
+    [self addDefaultCard:@"ICICI" icon:@"debit" type:ICBankDebit inContext:context];
 }
 
 - (void)insertDefaultBankCreditCards:(NSManagedObjectContext*)context {
-    [self addDefaultCard:@"SBI" icon:@"bank-mini-white" type:ICBankCredit inContext:context];
-    [self addDefaultCard:@"HDFC" icon:@"bank-mini-white" type:ICBankCredit inContext:context];
-    [self addDefaultCard:@"ICICI" icon:@"bank-mini-white" type:ICBankCredit inContext:context];
+    [self addDefaultCard:@"SBI" icon:@"credit" type:ICBankCredit inContext:context];
+    [self addDefaultCard:@"HDFC" icon:@"credit" type:ICBankCredit inContext:context];
+    [self addDefaultCard:@"ICICI" icon:@"credit" type:ICBankCredit inContext:context];
 }
 
 - (void)insertDefaultData {

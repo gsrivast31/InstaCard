@@ -45,9 +45,6 @@ static NSString *kCardEntity = @"ICCard";
 {
     [super viewWillDisappear:animated];
     // unregister for keyboard notifications while not visible.
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillShowNotification
-                                                  object:nil];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self
                                                     name:UIKeyboardWillHideNotification
@@ -71,13 +68,13 @@ static NSString *kCardEntity = @"ICCard";
             self.frontImage = [UIImage imageWithData:self.card.frontImage];
             [self.frontImageView setImage:self.frontImage];
         } else {
-            [self.frontImageView setImage:[UIImage imageNamed:@"camera-white"]];
+            [self.frontImageView setImage:[UIImage imageNamed:@"placeholder"]];
         }
         if (self.card.backImage) {
             self.backImage = [UIImage imageWithData:self.card.backImage];
             [self.backImageView setImage:self.backImage];
         } else {
-            [self.backImageView setImage:[UIImage imageNamed:@"camera-white"]];
+            [self.backImageView setImage:[UIImage imageNamed:@"placeholder"]];
         }
         if (self.card.startDate) {
             NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.card.startDate];
@@ -103,8 +100,8 @@ static NSString *kCardEntity = @"ICCard";
         }
     } else {
         self.title = @"Add New Card";
-        [self.frontImageView setImage:[UIImage imageNamed:@"camera-white"]];
-        [self.backImageView setImage:[UIImage imageNamed:@"camera-white"]];
+        [self.frontImageView setImage:[UIImage imageNamed:@"placeholder"]];
+        [self.backImageView setImage:[UIImage imageNamed:@"placeholder"]];
     }
     
     UITapGestureRecognizer* frontTouchGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(editFrontImage:)];
@@ -165,9 +162,31 @@ static NSString *kCardEntity = @"ICCard";
         newCard.endDate = [date timeIntervalSince1970];
     }
     
-    newCard.iconName = @"default";
+    newCard.iconName = [self getIconName:self.card.type];
     newCard.createdAt = [[NSDate date] timeIntervalSince1970];
     [coreDataStack saveContext];
+}
+
+- (NSString*)getIconName:(ICCardType)type {
+    NSString* iconName;
+    switch (type) {
+        case ICBankCredit:
+            iconName = @"credit";
+            break;
+        case ICBankDebit:
+            iconName = @"debit";
+            break;
+        case ICLoyalty:
+            iconName = @"loyalty";
+            break;
+        case ICPolicy:
+            iconName = @"policies";
+            break;
+        default:
+            iconName = @"default";
+            break;
+    }
+    return iconName;
 }
 
 - (BOOL)isEmpty:(NSString*)string {
@@ -320,12 +339,10 @@ static NSString *kCardEntity = @"ICCard";
 }
 
 -(void)keyboardWillHide {
-    if (self.view.frame.origin.y >= 0)
-    {
+    if (self.view.frame.origin.y >= 0) {
         [self setViewMovedUp:YES];
     }
-    else if (self.view.frame.origin.y < 0)
-    {
+    else if (self.view.frame.origin.y < 0) {
         [self setViewMovedUp:NO];
     }
 }
@@ -337,11 +354,9 @@ static NSString *kCardEntity = @"ICCard";
 
 -(void)textFieldDidBeginEditing:(UITextField *)sender
 {
-    if ([sender isEqual:self.startDDTextField] || [sender isEqual:self.startMMTextField] || [sender isEqual:self.startYYTextField] || [sender isEqual:self.endDDTextField] || [sender isEqual:self.endMMTextField] || [sender isEqual:self.endYYTextField])
-    {
+    if ([sender isEqual:self.startDDTextField] || [sender isEqual:self.startMMTextField] || [sender isEqual:self.startYYTextField] || [sender isEqual:self.endDDTextField] || [sender isEqual:self.endMMTextField] || [sender isEqual:self.endYYTextField]) {
         //move the main view, so that the keyboard does not hide it.
-        if  (self.view.frame.origin.y >= 0)
-        {
+        if  (self.view.frame.origin.y >= 0) {
             [self setViewMovedUp:YES];
         }
     }
