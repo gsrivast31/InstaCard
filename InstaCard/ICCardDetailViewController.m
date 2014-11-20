@@ -9,10 +9,14 @@
 #import "ICCardDetailViewController.h"
 #import "ICCard.h"
 #import "ICCardEditViewController.h"
+#import "ICImageViewController.h"
 #import "ICCoreDataStack.h"
 
-@interface ICCardDetailViewController () <UIActionSheetDelegate>
+#import <MessageUI/MessageUI.h>
 
+#define kPadding 20
+
+@interface ICCardDetailViewController ()
 @end
 
 @implementation ICCardDetailViewController
@@ -23,12 +27,19 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
     [self fillCardDetails];
-    
     [self setRightBarButtonItems];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCard:) name:@"updateCardDetails" object:nil];
+    
+    UITapGestureRecognizer* frontTouchGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openFrontImage:)];
+    [frontTouchGesture setNumberOfTapsRequired:1];
+    [self.frontImageView setUserInteractionEnabled:YES];
+    [self.frontImageView addGestureRecognizer:frontTouchGesture];
+    UITapGestureRecognizer* backTouchGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openBackImage:)];
+    [backTouchGesture setNumberOfTapsRequired:1];
+    [self.backImageView setUserInteractionEnabled:YES];
+    [self.backImageView addGestureRecognizer:backTouchGesture];
 }
 
 - (void) dealloc {
@@ -73,24 +84,10 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
             [self.backImageView setImage:[UIImage imageWithData:self.card.backImage]];
         }
         if (self.card.startDate) {
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.card.startDate];
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
-            NSInteger day = [components day];
-            NSInteger month = [components month];
-            NSInteger year = [components year];
-            
-            self.startDateLabel.text = [NSString stringWithFormat:@"%@ - %@ - %@",[@(day) stringValue], [@(month) stringValue], [@(year) stringValue]];
+            self.startDateLabel.text = [self getStartDateString];
         }
         if (self.card.endDate) {
-            NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.card.endDate];
-            NSCalendar *calendar = [NSCalendar currentCalendar];
-            NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
-            NSInteger day = [components day];
-            NSInteger month = [components month];
-            NSInteger year = [components year];
-            
-            self.endDateLabel.text = [NSString stringWithFormat:@"%@ - %@ - %@",[@(day) stringValue], [@(month) stringValue], [@(year) stringValue]];
+            self.endDateLabel.text = [self getEndDateString];
         }
     }
 }
@@ -115,29 +112,56 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 }
 
 - (void)shareCard {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose an action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Export to PDF", @"Email Card", nil];
-    
-    [actionSheet showInView:self.view];
+    NSString* message = [NSString stringWithFormat:@"\n Name: %@\n"
+                           "\n Number: %@\n"
+                           "\n Issued on: %@\n"
+                           "\n Expiry on: %@\n", self.card.name, self.card.number, self.startDateLabel.text, self.endDateLabel.text];
+    NSArray* objectsToShare = @[message, [UIImage imageWithData:self.card.frontImage], [UIImage imageWithData:self.card.backImage]];
+    NSArray *excludedActivities = @[UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
+                                    UIActivityTypePostToWeibo, UIActivityTypeAssignToContact,
+                                    UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+                                    UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    controller.excludedActivityTypes = excludedActivities;
+                                
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
-- (void)exportToPDF {
+- (NSString*)getStartDateString {
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.card.startDate];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
     
+    return [NSString stringWithFormat:@"%@ - %@ - %@",[@(day) stringValue], [@(month) stringValue], [@(year) stringValue]];
+
 }
 
-- (void)emailCard {
+- (NSString*)getEndDateString {
+    NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.card.endDate];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *components = [calendar components:NSCalendarUnitYear|NSCalendarUnitMonth|NSCalendarUnitDay fromDate:date];
+    NSInteger day = [components day];
+    NSInteger month = [components month];
+    NSInteger year = [components year];
     
+    return [NSString stringWithFormat:@"%@ - %@ - %@",[@(day) stringValue], [@(month) stringValue], [@(year) stringValue]];
 }
 
-#pragma mark UIActionSheetDelegate
+- (void)openBackImage:(UITapGestureRecognizer*)gesture {
+    ICImageViewController* backImageViewController = [[ICImageViewController alloc] init];
+    backImageViewController.image = [UIImage imageWithData:self.card.backImage];
+    
+    [self.navigationController pushViewController:backImageViewController animated:YES];
+}
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != actionSheet.cancelButtonIndex) {
-        if (buttonIndex == actionSheet.firstOtherButtonIndex) {
-            [self exportToPDF];
-        } else {
-            [self emailCard];
-        }
-    }
+- (void)openFrontImage:(UITapGestureRecognizer*)gesture {
+    ICImageViewController* frontImageViewController = [[ICImageViewController alloc] init];
+    frontImageViewController.image = [UIImage imageWithData:self.card.frontImage];
+    
+    [self.navigationController pushViewController:frontImageViewController animated:YES];
 }
 
 @end

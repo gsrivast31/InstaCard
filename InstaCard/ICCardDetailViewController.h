@@ -10,7 +10,9 @@
 
 @class ICCard;
 
-@interface ICCardDetailViewController : UIViewController
+@interface ICCardDetailViewController : UIViewController {
+    CGSize _pageSize;
+}
 
 @property (nonatomic, strong) ICCard *card;
 @property (weak, nonatomic) IBOutlet UILabel *personLabel;
@@ -21,4 +23,5 @@
 @property (weak, nonatomic) IBOutlet UILabel *endDateLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *frontImageView;
 @property (weak, nonatomic) IBOutlet UIImageView *backImageView;
+
 @end
