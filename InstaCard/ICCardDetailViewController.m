@@ -23,7 +23,34 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    [self fillCardDetails];
     
+    [self setRightBarButtonItems];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateCard:) name:@"updateCardDetails" object:nil];
+}
+
+- (void) dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+- (void)setRightBarButtonItems {
+    UIBarButtonItem* editButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit"] style:UIBarButtonItemStylePlain target:self action:@selector(editCard)];
+    
+    UIBarButtonItem* shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareCard)];
+    
+    UIBarButtonItem* deleteButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteCard)];
+    
+    NSArray* rightButtons = @[shareButtonItem, editButtonItem, deleteButtonItem];
+    self.navigationItem.rightBarButtonItems = rightButtons;
+}
+
+- (void)fillCardDetails {
     if (self.card != nil) {
         self.title = self.card.cardName;
         
@@ -66,35 +93,19 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
             self.endDateLabel.text = [NSString stringWithFormat:@"%@ - %@ - %@",[@(day) stringValue], [@(month) stringValue], [@(year) stringValue]];
         }
     }
-    
-    [self setRightBarButtonItems];
 }
 
-
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)updateCard:(NSNotification *)notification {
+    NSDictionary* dictionary = [notification userInfo];
+    self.card = [dictionary valueForKey:@"card"];
+    [self fillCardDetails];
 }
-
-- (void)setRightBarButtonItems {
-    UIBarButtonItem* editButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"edit"] style:UIBarButtonItemStylePlain target:self action:@selector(editCard)];
-    
-    UIBarButtonItem* shareButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(shareCard)];
-    
-    UIBarButtonItem* deleteButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteCard)];
-    
-    NSArray* rightButtons = @[shareButtonItem, editButtonItem, deleteButtonItem];
-    self.navigationItem.rightBarButtonItems = rightButtons;
-}
-
+   
 - (void)editCard {
     ICCardEditViewController* addCardController = [self.storyboard instantiateViewControllerWithIdentifier:kCardEditViewControllerStoryBoardID];
-//    addCardController.modalPresentationStyle = UIModalPresentationCustom;
-//    addCardController.transitioningDelegate = self;
     addCardController.card = self.card;
     [addCardController setCardType:self.card.type];
     [self.navigationController pushViewController:addCardController animated:YES];
-//    [self presentViewController:addCardController animated:YES completion:nil];
 }
 
 - (void) deleteCard {

@@ -33,7 +33,9 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 - (void)viewWillAppear:(BOOL)animated {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
-    CGFloat screenHeight = screenRect.size.height - self.navigationController.navigationBar.frame.size.height;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat screenHeight = screenRect.size.height - navigationBarHeight - statusBarHeight;
     
     CGFloat itemWidth = (screenWidth)/3.0;
     CGFloat itemHeight = (screenHeight)/4.0;

@@ -109,14 +109,14 @@ static NSString *kCardEntity = @"ICCard";
     newCard.cardName = self.cardTextField.text;
     newCard.number = self.cardNumbeTextField.text;
     newCard.type = _cardType;
-    if (self.frontImageView.image) {
-        newCard.frontImage = UIImageJPEGRepresentation(self.frontImageView.image, 0.75);
+    if (self.frontImage) {
+        newCard.frontImage = UIImageJPEGRepresentation(self.frontImage, 0.75);
     }
-    if (self.backImageView.image) {
-        newCard.backImage = UIImageJPEGRepresentation(self.backImageView.image, 0.75);
+    if (self.backImage) {
+        newCard.backImage = UIImageJPEGRepresentation(self.backImage, 0.75);
     }
     
-    if (self.startDDTextField.text && self.startMMTextField.text && self.startYYTextField.text) {
+    if ([self isStartDateValid]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
         [components setDay:[self.startDDTextField.text integerValue]];
@@ -126,7 +126,7 @@ static NSString *kCardEntity = @"ICCard";
         NSDate* date = [calendar dateFromComponents:components];
         newCard.startDate = [date timeIntervalSince1970];
     }
-    if (self.endDDTextField.text && self.endMMTextField.text && self.endYYTextField.text) {
+    if ([self isEndDateValid]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
         [components setDay:[self.endDDTextField.text integerValue]];
@@ -141,19 +141,31 @@ static NSString *kCardEntity = @"ICCard";
     [coreDataStack saveContext];
 }
 
+- (BOOL)isEmpty:(NSString*)string {
+    return (string == nil || (string && [string isEqualToString:@""]));
+}
+
+- (BOOL)isStartDateValid {
+    return ![self isEmpty:self.startDDTextField.text] && ![self isEmpty:self.startMMTextField.text] && ![self isEmpty:self.startYYTextField.text];
+}
+
+- (BOOL)isEndDateValid {
+    return ![self isEmpty:self.endDDTextField.text] && ![self isEmpty:self.endMMTextField.text] && ![self isEmpty:self.endYYTextField.text];
+}
+
 - (void)updateCard {
     self.card.name = self.personTextField.text;
     self.card.cardName = self.cardTextField.text;
     self.card.number = self.cardNumbeTextField.text;
     
-    if (self.frontImageView.image) {
-        self.card.frontImage = UIImageJPEGRepresentation(self.frontImageView.image, 0.75);
+    if (self.frontImage) {
+        self.card.frontImage = UIImageJPEGRepresentation(self.frontImage, 0.75);
     }
-    if (self.backImageView.image) {
-        self.card.backImage = UIImageJPEGRepresentation(self.backImageView.image, 0.75);
+    if (self.backImage) {
+        self.card.backImage = UIImageJPEGRepresentation(self.backImage, 0.75);
     }
 
-    if (self.startDDTextField.text && self.startMMTextField.text && self.startYYTextField.text) {
+    if ([self isStartDateValid]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
         [components setDay:[self.startDDTextField.text integerValue]];
@@ -163,7 +175,7 @@ static NSString *kCardEntity = @"ICCard";
         NSDate* date = [calendar dateFromComponents:components];
         self.card.startDate = [date timeIntervalSince1970];
     }
-    if (self.endDDTextField.text && self.endMMTextField.text && self.endYYTextField.text) {
+    if ([self isEndDateValid]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
         [components setDay:[self.endDDTextField.text integerValue]];
@@ -178,8 +190,7 @@ static NSString *kCardEntity = @"ICCard";
 }
 
 - (IBAction)saveCard:(id)sender {
-    
-    if (self.cardTextField.text == nil || [self.cardTextField.text isEqualToString:@""] ) {
+    if ([self isEmpty:self.cardTextField.text]) {
         UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Missing Name" message:@"Card Name must not be empty" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
         return;
@@ -187,10 +198,16 @@ static NSString *kCardEntity = @"ICCard";
     
     if (self.card != nil) {
         [self updateCard];
+        [self updateCardDetailView];
     } else {
         [self addCard];
     }
     [self dismissSelf];
+}
+
+- (void)updateCardDetailView {
+    NSDictionary* dictionary = [NSDictionary dictionaryWithObject:self.card forKey:@"card"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCardDetails" object:nil userInfo:dictionary];
 }
 
 - (void)promptForSource {
