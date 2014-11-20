@@ -12,7 +12,7 @@
 
 #define kOFFSET_FOR_KEYBOARD 80.0
 
-@interface ICCardEditViewController () <UIActionSheetDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate> {
+@interface ICCardEditViewController () <UIActionSheetDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextFieldDelegate> {
     BOOL _editingBackImage;
     BOOL _editingFrontImage;
     ICCardType _cardType;
@@ -31,12 +31,10 @@ static NSString *kCardEntity = @"ICCard";
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillShow)
-                                                 name:UIKeyboardWillShowNotification
-                                               object:nil];
     
+    [self initializeViewsBeneathView:self.view];
+    
+    // register for keyboard notifications
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide)
                                                  name:UIKeyboardWillHideNotification
@@ -167,6 +165,7 @@ static NSString *kCardEntity = @"ICCard";
         newCard.endDate = [date timeIntervalSince1970];
     }
     
+    newCard.iconName = @"default";
     newCard.createdAt = [[NSDate date] timeIntervalSince1970];
     [coreDataStack saveContext];
 }
@@ -291,15 +290,32 @@ static NSString *kCardEntity = @"ICCard";
 }
 
 #pragma mark Keyboard View
--(void)keyboardWillShow {
-    // Animate the current view out of the way
-    if (self.view.frame.origin.y >= 0)
-    {
-        [self setViewMovedUp:YES];
+
+- (void)initializeViewsBeneathView:(UIView*)view {
+    for ( UIView *childView in view.subviews ) {
+        if ( ([childView isKindOfClass:[UITextField class]] || [childView isKindOfClass:[UITextView class]]) ) {
+            [self initializeView:childView];
+        } else {
+            [self initializeViewsBeneathView:childView];
+        }
     }
-    else if (self.view.frame.origin.y < 0)
-    {
-        [self setViewMovedUp:NO];
+}
+
+- (void)initializeView:(UIView*)view {
+    if ( [view isKindOfClass:[UITextField class]] && (![(UITextField*)view delegate] || [(UITextField*)view delegate] == self) ) {
+        [(UITextField*)view setDelegate:self];
+        
+        /*if ( [view isKindOfClass:[UITextField class]] ) {
+            UIView *otherView = nil;
+            CGFloat minY = CGFLOAT_MAX;
+            [self findTextFieldAfterTextField:view beneathView:self minY:&minY foundView:&otherView];
+            
+            if ( otherView ) {
+                ((UITextField*)view).returnKeyType = UIReturnKeyNext;
+            } else {
+                ((UITextField*)view).returnKeyType = UIReturnKeyDone;
+            }
+        }*/
     }
 }
 
@@ -312,6 +328,11 @@ static NSString *kCardEntity = @"ICCard";
     {
         [self setViewMovedUp:NO];
     }
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField {
+    [textField resignFirstResponder];
+    return YES;
 }
 
 -(void)textFieldDidBeginEditing:(UITextField *)sender

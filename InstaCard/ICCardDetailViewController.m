@@ -151,17 +151,21 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 }
 
 - (void)openBackImage:(UITapGestureRecognizer*)gesture {
-    ICImageViewController* backImageViewController = [[ICImageViewController alloc] init];
-    backImageViewController.image = [UIImage imageWithData:self.card.backImage];
-    
-    [self.navigationController pushViewController:backImageViewController animated:YES];
+    if (self.card.backImage) {
+        ICImageViewController* backImageViewController = [[ICImageViewController alloc] init];
+        backImageViewController.image = [UIImage imageWithData:self.card.backImage];
+        
+        [self.navigationController pushViewController:backImageViewController animated:YES];
+    }
 }
 
 - (void)openFrontImage:(UITapGestureRecognizer*)gesture {
-    ICImageViewController* frontImageViewController = [[ICImageViewController alloc] init];
-    frontImageViewController.image = [UIImage imageWithData:self.card.frontImage];
+    if (self.card.frontImage) {
+        ICImageViewController* frontImageViewController = [[ICImageViewController alloc] init];
+        frontImageViewController.image = [UIImage imageWithData:self.card.frontImage];
     
-    [self.navigationController pushViewController:frontImageViewController animated:YES];
+        [self.navigationController pushViewController:frontImageViewController animated:YES];
+    }
 }
 
 @end

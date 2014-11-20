@@ -26,11 +26,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G5N-ow-8Cm">
-                                            <rect key="frame" x="24" y="8" width="58" height="56"/>
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G5N-ow-8Cm">
+                                            <rect key="frame" x="33" y="33" width="40" height="40"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="40" id="1Bd-gh-y5H"/>
+                                                <constraint firstAttribute="height" constant="56" id="4zJ-Kk-5xA"/>
+                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="58" id="Bh3-II-fr5"/>
+                                                <constraint firstAttribute="width" constant="40" id="u2S-S7-iuJ"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="4zJ-Kk-5xA"/>
+                                                    <exclude reference="Bh3-II-fr5"/>
+                                                </mask>
+                                            </variation>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-HH-Xpq">
-                                            <rect key="frame" x="8" y="71" width="90" height="27"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-HH-Xpq">
+                                            <rect key="frame" x="8" y="78" width="90" height="20"/>
                                             <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="13"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -39,6 +51,28 @@
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <color key="backgroundColor" red="0.24368686868686873" green="0.24368686868686873" blue="0.24368686868686873" alpha="0.75" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="G5N-ow-8Cm" secondAttribute="centerX" id="362-3S-hD7"/>
+                                    <constraint firstItem="G5N-ow-8Cm" firstAttribute="top" secondItem="IH8-J7-DZK" secondAttribute="topMargin" id="7dd-Yb-fkf"/>
+                                    <constraint firstAttribute="centerY" secondItem="G5N-ow-8Cm" secondAttribute="centerY" id="C8J-ni-1TL"/>
+                                    <constraint firstItem="G5N-ow-8Cm" firstAttribute="leading" secondItem="IH8-J7-DZK" secondAttribute="leadingMargin" constant="16" id="O0h-wk-7RM"/>
+                                    <constraint firstAttribute="centerX" secondItem="G5N-ow-8Cm" secondAttribute="centerX" id="XHO-1S-bNd"/>
+                                    <constraint firstItem="2ai-HH-Xpq" firstAttribute="leading" secondItem="IH8-J7-DZK" secondAttribute="leadingMargin" id="Xt6-JY-2YH"/>
+                                    <constraint firstAttribute="centerY" secondItem="G5N-ow-8Cm" secondAttribute="centerY" id="b3Q-ps-X2c"/>
+                                    <constraint firstItem="2ai-HH-Xpq" firstAttribute="top" secondItem="G5N-ow-8Cm" secondAttribute="bottom" constant="5" id="b98-4H-HxG"/>
+                                    <constraint firstItem="2ai-HH-Xpq" firstAttribute="bottom" secondItem="IH8-J7-DZK" secondAttribute="bottomMargin" id="bJF-bu-3X1"/>
+                                    <constraint firstItem="2ai-HH-Xpq" firstAttribute="trailing" secondItem="IH8-J7-DZK" secondAttribute="trailingMargin" id="cfM-TB-vjE"/>
+                                    <constraint firstAttribute="trailingMargin" secondItem="G5N-ow-8Cm" secondAttribute="trailing" constant="16" id="x8z-2C-nM5"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="7dd-Yb-fkf"/>
+                                        <exclude reference="C8J-ni-1TL"/>
+                                        <exclude reference="O0h-wk-7RM"/>
+                                        <exclude reference="XHO-1S-bNd"/>
+                                        <exclude reference="x8z-2C-nM5"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="image" destination="G5N-ow-8Cm" id="Gmy-a7-PJg"/>
                                     <outlet property="name" destination="2ai-HH-Xpq" id="58m-go-gYC"/>
