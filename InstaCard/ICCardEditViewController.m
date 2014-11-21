@@ -33,22 +33,6 @@ static NSString *kCardEntity = @"ICCard";
     [super viewWillAppear:animated];
     
     [self initializeViewsBeneathView:self.view];
-    
-    // register for keyboard notifications
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(keyboardWillHide)
-                                                 name:UIKeyboardWillHideNotification
-                                               object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    // unregister for keyboard notifications while not visible.
-    
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:UIKeyboardWillHideNotification
-                                                  object:nil];
 }
 
 - (void)viewDidLoad {
@@ -323,32 +307,14 @@ static NSString *kCardEntity = @"ICCard";
 - (void)initializeView:(UIView*)view {
     if ( [view isKindOfClass:[UITextField class]] && (![(UITextField*)view delegate] || [(UITextField*)view delegate] == self) ) {
         [(UITextField*)view setDelegate:self];
-        
-        /*if ( [view isKindOfClass:[UITextField class]] ) {
-            UIView *otherView = nil;
-            CGFloat minY = CGFLOAT_MAX;
-            [self findTextFieldAfterTextField:view beneathView:self minY:&minY foundView:&otherView];
-            
-            if ( otherView ) {
-                ((UITextField*)view).returnKeyType = UIReturnKeyNext;
-            } else {
-                ((UITextField*)view).returnKeyType = UIReturnKeyDone;
-            }
-        }*/
     }
 }
 
--(void)keyboardWillHide {
-    if (self.view.frame.origin.y >= 0) {
-        [self setViewMovedUp:YES];
-    }
-    else if (self.view.frame.origin.y < 0) {
+-(BOOL)textFieldShouldReturn:(UITextField *)sender {
+    if  (self.view.frame.origin.y < 0) {
         [self setViewMovedUp:NO];
     }
-}
-
--(BOOL)textFieldShouldReturn:(UITextField *)textField {
-    [textField resignFirstResponder];
+    [sender resignFirstResponder];
     return YES;
 }
 
