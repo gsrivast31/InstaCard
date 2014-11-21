@@ -13,10 +13,14 @@
 #import "ICCardEditViewController.h"
 #import "ICCardCell.h"
 #import "ICUtils.h"
+#import "ICNotificationView.h"
+
+#import "ICConstants.h"
+#import "KeychainWrapper.h"
 
 #import <MessageUI/MessageUI.h>
 
-@interface ICCardViewController () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
+@interface ICCardViewController () <NSFetchedResultsControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -24,6 +28,9 @@
 
 @implementation ICCardViewController
 
+@synthesize viewType = _viewType;
+
+#pragma mark Statics
 static NSString *CellIdentifier = @"ICCardCell";
 static NSString *kCardEntity = @"ICCard";
 static NSString *kShowDetailSegueID = @"showDetail";
@@ -32,6 +39,13 @@ static NSString *kCardViewControllerStoryBoardID = @"cardViewController";
 static NSString *kCardDetailViewControllerStoryBoardID = @"cardDetailViewController";
 static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController";
 
+static NSString *setPinSetting = @"Set PIN";
+static NSString *resetPinSetting = @"Reset PIN";
+static NSString *changePinSetting = @"Change PIN";
+static NSString *tellFriendSetting = @"Tell A Friend";
+static NSString *feedbackSetting = @"Feedback";
+
+#pragma mark View lifecycle
 - (void)viewWillAppear:(BOOL)animated {
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     CGFloat screenWidth = screenRect.size.width;
@@ -50,8 +64,13 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    _pinValidated = NO;
+
     _objectChanges = [NSMutableArray array];
     _sectionChanges = [NSMutableArray array];
+    
+    _selectedCard = nil;
+    _inputPIN = nil;
     
     [self.fetchedResultsController performFetch:nil];
     
@@ -68,10 +87,19 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     self.navigationItem.leftBarButtonItem = settingsButtonItem;
 }
 
-- (void)setViewType:(int16_t)type {
-    _viewType = type;
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    _selectedCard = nil;
+    _pinValidated = NO;
+    _inputPIN = nil;
 }
 
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+#pragma mark Utilities
 - (void)setViewTitle {
     NSString* title = nil;
     switch (_viewType) {
@@ -95,6 +123,13 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     self.title = title;
 }
 
+- (void)showNotification:(NSString*)text {
+    ICNotificationView *nView = [[ICNotificationView alloc] initWithText: text];
+    [self.view addSubview: nView];
+    [nView show];
+}
+
+#pragma Default Cards
 - (void) addDefaultCard:(NSString*)name icon:(NSString*)iconName type:(ICCardType)type inContext:(NSManagedObjectContext*)context {
     ICCard *cardData = [NSEntityDescription insertNewObjectForEntityForName:kCardEntity inManagedObjectContext:context];
     cardData.cardName = name;
@@ -165,17 +200,13 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
+#pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     id <NSFetchedResultsSectionInfo> sectionInfo = [self.fetchedResultsController sections][section];
     return [sectionInfo numberOfObjects];
 }
 
-#pragma mark UICollectionViewDataSource
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     ICCardCell *cell = (ICCardCell *)[collectionView dequeueReusableCellWithReuseIdentifier:CellIdentifier forIndexPath:indexPath];
     ICCard *card = [self.fetchedResultsController objectAtIndexPath:indexPath];
@@ -211,9 +242,27 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
         [cardViewController setViewType:ICLoyalty];
         [self.navigationController pushViewController:cardViewController animated:YES];
     } else {
-        ICCardDetailViewController* cardDetailController = [self.storyboard instantiateViewControllerWithIdentifier:kCardDetailViewControllerStoryBoardID];
-        cardDetailController.card = card;
-        [self.navigationController pushViewController:cardDetailController animated:YES];
+        _selectedCard = card;
+        if ([self usePin]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter PIN"
+                                                            message:nil
+                                                           delegate:self
+                                                  cancelButtonTitle:@"Cancel"
+                                                  otherButtonTitles:@"Done", nil];
+            [alert setAlertViewStyle:UIAlertViewStyleSecureTextInput]; // Gives us the pin field
+            alert.tag = kAlertTypePIN;
+
+            UITextField *pinField = [alert textFieldAtIndex:0];
+            pinField.delegate = self;
+            pinField.placeholder = @"Pin";
+            pinField.tag = kTextFieldPIN;
+            [alert show];
+        }
+        else {
+            ICCardDetailViewController* cardDetailController = [self.storyboard instantiateViewControllerWithIdentifier:kCardDetailViewControllerStoryBoardID];
+            cardDetailController.card = card;
+            [self.navigationController pushViewController:cardDetailController animated:YES];
+        }
     }
 }
 
@@ -383,6 +432,7 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     return shouldReload;
 }
 
+#pragma Responders, Events
 - (IBAction)addCard:(id)sender {
     ICCardEditViewController* addCardController = [self.storyboard instantiateViewControllerWithIdentifier:kCardEditViewControllerStoryBoardID];
     addCardController.card = nil;
@@ -393,20 +443,16 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 #pragma mark Settings
 
 - (void)openSettings {
-    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Set PIN", @"Tell a Friend", @"Feedback", nil];
+    UIActionSheet* actionSheet = nil;
+    
+    if (![self usePin]) {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Set PIN", @"Tell a Friend", @"Feedback", nil];
+    }
+    else {
+        actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reset PIN", @"Change PIN", @"Tell a Friend", @"Feedback", nil];
+    }
     
     [actionSheet showInView:self.view];
-}
-
-- (void)setPIN {
-    
-}
-
-- (void)mailComposeController:(MFMailComposeViewController*)mailController didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
-    
-    [self becomeFirstResponder];
-    
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)tellAFriend {
@@ -459,17 +505,214 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     [self presentViewController:picker animated:YES completion:nil];
 }
 
+#pragma mark MFMailComposeViewControllerDelegate
+- (void)mailComposeController:(MFMailComposeViewController*)mailController didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    [self becomeFirstResponder];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark UIActionSheetDelegate
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != actionSheet.cancelButtonIndex) {
         NSInteger firstOtherIndex = actionSheet.firstOtherButtonIndex;
-        
-        if (buttonIndex == firstOtherIndex) {
-            [self setPIN];
-        } else if (buttonIndex == firstOtherIndex + 1) {
-            [self tellAFriend];
-        } else if (buttonIndex == firstOtherIndex + 2) {
-            [self provideFeedback];
+
+        if (![self usePin]) {
+            if (buttonIndex == firstOtherIndex) {
+                [self setPIN];
+            } else if (buttonIndex == firstOtherIndex + 1) {
+                [self tellAFriend];
+            } else if (buttonIndex == firstOtherIndex + 2) {
+                [self provideFeedback];
+            }
+        }
+        else {
+            if (buttonIndex == firstOtherIndex) {
+                [self resetPIN];
+            } else if (buttonIndex == firstOtherIndex + 1) {
+                [self changePIN];
+            } else if (buttonIndex == firstOtherIndex + 2) {
+                [self tellAFriend];
+            } else if (buttonIndex == firstOtherIndex + 3) {
+                [self provideFeedback];
+            }
         }
     }
 }
+
+#pragma mark - Text Field + Alert View Methods
+- (void)textFieldDidEndEditing:(UITextField *)textField {
+    switch (textField.tag) {
+        case kTextFieldPIN:
+            NSLog(@"User entered PIN to validate");
+            if ([textField.text length] > 0) {
+                _inputPIN = textField.text;
+            }
+            break;
+        case kTextFieldSetup:
+            NSLog(@"User entered PIN");
+            if ([textField.text length] > 0) {
+                _inputPIN = textField.text;
+            }
+            break;
+        case kTextFieldReset:
+        case kTextFieldChange:
+            NSLog(@"User is attempting to change pin");
+            if ([textField.text length] > 0) {
+                _inputPIN = textField.text;
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+    if (alertView.tag == kAlertTypePIN) {
+        if (buttonIndex == 1) {
+            [self setPinValidity];
+            if (_pinValidated) {
+                ICCardDetailViewController* cardDetailController = [self.storyboard instantiateViewControllerWithIdentifier:kCardDetailViewControllerStoryBoardID];
+                cardDetailController.card = _selectedCard;
+                [self.navigationController pushViewController:cardDetailController animated:YES];
+            }
+            else {
+                [self showNotification:@"Wrong Pin"];
+            }
+        }
+    } else if (alertView.tag == kAlertTypeSetup) {
+        if (buttonIndex == 1) {
+            [self storePin];
+            [self showNotification:@"PIN saved successfully"];
+        }
+    } else if (alertView.tag == kAlertTypeReset) {
+        if (buttonIndex == 1) {
+            [self setPinValidity];
+            if (_pinValidated) {
+                [[NSUserDefaults standardUserDefaults] setBool:NO forKey:PIN_SAVED];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                NSLog(@"** Key reset successfully!!");
+                [self showNotification:@"PIN reset successfully"];
+            }
+            else {
+                [self showNotification:@"Wrong Pin"];
+            }
+        }
+    } else if (alertView.tag == kAlertTypeChange) {
+        if (buttonIndex == 1) {
+            [self setPinValidity];
+            if (_pinValidated) {
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"New PIN"
+                                                                message:nil
+                                                               delegate:self
+                                                      cancelButtonTitle:@"Cancel"
+                                                      otherButtonTitles:@"Done", nil];
+                [alert setAlertViewStyle:UIAlertViewStyleSecureTextInput]; // Gives us the pin field
+                alert.tag = kAlertTypeSetup;
+                
+                UITextField *pinField = [alert textFieldAtIndex:0];
+                pinField.delegate = self;
+                pinField.placeholder = @"Pin";
+                pinField.tag = kTextFieldSetup;
+                [alert show];
+            }
+            else {
+                [self showNotification:@"Wrong Pin"];
+            }
+        }
+    }
+    _pinValidated = NO;
+    _selectedCard = nil;
+    _inputPIN = nil;
+    
+}
+
+- (BOOL)usePin {
+    BOOL pin = [[NSUserDefaults standardUserDefaults] boolForKey:PIN_SAVED];
+    if (pin) {
+        return YES;
+    } else {
+        return NO;
+    }
+}
+
+- (void)setPinValidity {
+    if (_inputPIN) {
+        NSUInteger fieldHash = [_inputPIN hash]; // Get the hash of the entered PIN, minimize contact with the real password
+        if ([KeychainWrapper compareKeychainValueForMatchingPIN:fieldHash]) { // Compare them
+            NSLog(@"** User Authenticated!!");
+            _pinValidated = YES;
+        } else {
+            NSLog(@"** Wrong Password :(");
+            _pinValidated = NO;
+        }
+    }
+}
+
+- (void)storePin {
+    if (_inputPIN) {
+        NSUInteger fieldHash = [_inputPIN hash];
+        NSString *fieldString = [KeychainWrapper securedSHA256DigestHashForPIN:fieldHash];
+        NSLog(@"** Password Hash - %@", fieldString);
+        // Save PIN hash to the keychain (NEVER store the direct PIN)
+        if ([KeychainWrapper createKeychainValue:fieldString forIdentifier:PIN_SAVED]) {
+            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:PIN_SAVED];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            NSLog(@"** Key saved successfully to Keychain!!");
+        }
+    }
+}
+
+- (void)setPIN {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Setup PIN"
+                                                    message:@"Secure your cards"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Done", nil];
+    [alert setAlertViewStyle:UIAlertViewStyleSecureTextInput]; // Gives us the pin field
+    alert.tag = kAlertTypeSetup;
+    
+    UITextField *pinField = [alert textFieldAtIndex:0];
+    pinField.delegate = self;
+    pinField.placeholder = @"Pin";
+    pinField.tag = kTextFieldSetup;
+    [alert show];
+}
+
+- (void)resetPIN {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter old PIN"
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Done", nil];
+    [alert setAlertViewStyle:UIAlertViewStyleSecureTextInput]; // Gives us the pin field
+    alert.tag = kAlertTypeReset;
+    
+    UITextField *pinField = [alert textFieldAtIndex:0];
+    pinField.delegate = self;
+    pinField.placeholder = @"Pin";
+    pinField.tag = kTextFieldReset;
+    [alert show];
+}
+
+- (void)changePIN {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Enter old PIN"
+                                                    message:nil
+                                                   delegate:self
+                                          cancelButtonTitle:@"Cancel"
+                                          otherButtonTitles:@"Done", nil];
+    [alert setAlertViewStyle:UIAlertViewStyleSecureTextInput]; // Gives us the pin field
+    alert.tag = kAlertTypeChange;
+    
+    UITextField *pinField = [alert textFieldAtIndex:0];
+    pinField.delegate = self;
+    pinField.placeholder = @"Pin";
+    pinField.tag = kTextFieldChange;
+    [alert show];
+}
+
+
+
+
 @end

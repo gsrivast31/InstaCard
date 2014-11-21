@@ -13,6 +13,8 @@
 @interface ICCardEditViewController : UIViewController
 
 @property (nonatomic, strong) ICCard *card;
+@property (nonatomic) ICCardType cardType;
+
 @property (weak, nonatomic) IBOutlet UITextField *cardTextField;
 @property (weak, nonatomic) IBOutlet UITextField *personTextField;
 @property (weak, nonatomic) IBOutlet UITextField *cardNumbeTextField;

@@ -6,16 +6,20 @@
 //  Copyright (c) 2014 GAURAV SRIVASTAVA. All rights reserved.
 //
 
+@class ICCard;
+
 @interface ICCardViewController : UICollectionViewController
 {
     NSMutableArray *_objectChanges;
     NSMutableArray *_sectionChanges;
-    NSMutableArray *_colorsArray;
     
-    int16_t _viewType;
+    BOOL _pinValidated;
+    ICCard *_selectedCard;
+    NSString *_inputPIN;
 }
 
-- (void)setViewType:(int16_t)type;
+@property (nonatomic) int16_t viewType;
+
 - (IBAction)addCard:(id)sender;
 
 @end

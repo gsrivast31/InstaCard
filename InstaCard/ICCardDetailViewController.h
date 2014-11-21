@@ -13,6 +13,7 @@
 }
 
 @property (nonatomic, strong) ICCard *card;
+
 @property (weak, nonatomic) IBOutlet UILabel *personLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cardNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *cardNumberLabel;

@@ -15,7 +15,6 @@
 @interface ICCardEditViewController () <UIActionSheetDelegate, UINavigationControllerDelegate,UIImagePickerControllerDelegate, UITextFieldDelegate> {
     BOOL _editingBackImage;
     BOOL _editingFrontImage;
-    ICCardType _cardType;
 }
 
 @end
@@ -25,9 +24,11 @@
 static NSString *kCardEntity = @"ICCard";
 
 @synthesize card = _card;
+@synthesize cardType = _cardType;
 @synthesize frontImage = _frontImage;
 @synthesize backImage = _backImage;
 
+#pragma mark View lifecycle
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
@@ -41,7 +42,7 @@ static NSString *kCardEntity = @"ICCard";
     _editingBackImage = _editingFrontImage = FALSE;
     
     if (self.card != nil) {
-        _cardType = self.card.type;
+        self.cardType = self.card.type;
         self.title = self.card.cardName;
         
         self.cardNumbeTextField.text = self.card.number;
@@ -106,10 +107,42 @@ static NSString *kCardEntity = @"ICCard";
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-- (void)setCardType:(ICCardType)type {
-    _cardType = type;
+#pragma mark Utilities
+- (NSString*)getIconName:(ICCardType)type {
+    NSString* iconName;
+    switch (type) {
+        case ICBankCredit:
+            iconName = @"credit";
+            break;
+        case ICBankDebit:
+            iconName = @"debit";
+            break;
+        case ICLoyalty:
+            iconName = @"loyalty";
+            break;
+        case ICPolicy:
+            iconName = @"policies";
+            break;
+        default:
+            iconName = @"default";
+            break;
+    }
+    return iconName;
 }
 
+- (BOOL)isEmpty:(NSString*)string {
+    return (string == nil || (string && [string isEqualToString:@""]));
+}
+
+- (BOOL)isStartDateValid {
+    return ![self isEmpty:self.startDDTextField.text] && ![self isEmpty:self.startMMTextField.text] && ![self isEmpty:self.startYYTextField.text];
+}
+
+- (BOOL)isEndDateValid {
+    return ![self isEmpty:self.endDDTextField.text] && ![self isEmpty:self.endMMTextField.text] && ![self isEmpty:self.endYYTextField.text];
+}
+
+#pragma mark
 - (void)addCard{
     ICCoreDataStack* coreDataStack = [ICCoreDataStack defaultStack];
     ICCard *newCard = [NSEntityDescription insertNewObjectForEntityForName:kCardEntity inManagedObjectContext:coreDataStack.managedObjectContext];
@@ -151,40 +184,6 @@ static NSString *kCardEntity = @"ICCard";
     [coreDataStack saveContext];
 }
 
-- (NSString*)getIconName:(ICCardType)type {
-    NSString* iconName;
-    switch (type) {
-        case ICBankCredit:
-            iconName = @"credit";
-            break;
-        case ICBankDebit:
-            iconName = @"debit";
-            break;
-        case ICLoyalty:
-            iconName = @"loyalty";
-            break;
-        case ICPolicy:
-            iconName = @"policies";
-            break;
-        default:
-            iconName = @"default";
-            break;
-    }
-    return iconName;
-}
-
-- (BOOL)isEmpty:(NSString*)string {
-    return (string == nil || (string && [string isEqualToString:@""]));
-}
-
-- (BOOL)isStartDateValid {
-    return ![self isEmpty:self.startDDTextField.text] && ![self isEmpty:self.startMMTextField.text] && ![self isEmpty:self.startYYTextField.text];
-}
-
-- (BOOL)isEndDateValid {
-    return ![self isEmpty:self.endDDTextField.text] && ![self isEmpty:self.endMMTextField.text] && ![self isEmpty:self.endYYTextField.text];
-}
-
 - (void)updateCard {
     self.card.name = self.personTextField.text;
     self.card.cardName = self.cardTextField.text;
@@ -196,7 +195,7 @@ static NSString *kCardEntity = @"ICCard";
     if (self.backImage) {
         self.card.backImage = UIImageJPEGRepresentation(self.backImage, 0.75);
     }
-
+    
     if ([self isStartDateValid]) {
         NSCalendar *calendar = [NSCalendar currentCalendar];
         NSDateComponents *components = [[NSDateComponents alloc] init];
@@ -221,42 +220,12 @@ static NSString *kCardEntity = @"ICCard";
     [[ICCoreDataStack defaultStack] saveContext];
 }
 
-- (IBAction)saveCard:(id)sender {
-    if ([self isEmpty:self.cardTextField.text]) {
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Missing Name" message:@"Card Name must not be empty" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-        return;
-    }
-    
-    if (self.card != nil) {
-        [self updateCard];
-        [self updateCardDetailView];
-    } else {
-        [self addCard];
-    }
-    [self dismissSelf];
-}
-
-- (void)updateCardDetailView {
-    NSDictionary* dictionary = [NSDictionary dictionaryWithObject:self.card forKey:@"card"];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCardDetails" object:nil userInfo:dictionary];
-}
-
 - (void)promptForSource {
     UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Change Image" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Camera", @"Photo Roll", nil];
     
     [actionSheet showInView:self.view];
 }
 
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != actionSheet.cancelButtonIndex) {
-        if (buttonIndex == actionSheet.firstOtherButtonIndex) {
-            [self promptForCamera];
-        } else {
-            [self promptForPhotoRoll];
-        }
-    }
-}
 
 - (void)promptForCamera {
     UIImagePickerController *controller = [[UIImagePickerController alloc] init];
@@ -280,6 +249,28 @@ static NSString *kCardEntity = @"ICCard";
     }
 }
 
+#pragma mark Responders, Events
+- (void)updateCardDetailView {
+    NSDictionary* dictionary = [NSDictionary dictionaryWithObject:self.card forKey:@"card"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"updateCardDetails" object:nil userInfo:dictionary];
+}
+
+- (IBAction)saveCard:(id)sender {
+    if ([self isEmpty:self.cardTextField.text]) {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"Missing Name" message:@"Card Name must not be empty" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView show];
+        return;
+    }
+    
+    if (self.card != nil) {
+        [self updateCard];
+        [self updateCardDetailView];
+    } else {
+        [self addCard];
+    }
+    [self dismissSelf];
+}
+
 - (void)editBackImage:(UITapGestureRecognizer*)gesture {
     _editingFrontImage = FALSE;
     _editingBackImage = TRUE;
@@ -290,6 +281,17 @@ static NSString *kCardEntity = @"ICCard";
     _editingFrontImage = TRUE;
     _editingBackImage = FALSE;
     [self promptForImage];
+}
+
+#pragma mark UIActionSheetDelegate
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != actionSheet.cancelButtonIndex) {
+        if (buttonIndex == actionSheet.firstOtherButtonIndex) {
+            [self promptForCamera];
+        } else {
+            [self promptForPhotoRoll];
+        }
+    }
 }
 
 #pragma mark Keyboard View

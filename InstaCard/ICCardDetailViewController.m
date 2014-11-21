@@ -12,8 +12,6 @@
 #import "ICImageViewController.h"
 #import "ICCoreDataStack.h"
 
-#import <MessageUI/MessageUI.h>
-
 #define kPadding 20
 
 @interface ICCardDetailViewController ()
@@ -25,8 +23,10 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 
 @synthesize card = _card;
 
+#pragma mark View lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
     [self fillCardDetails];
     [self setRightBarButtonItems];
     
@@ -64,6 +64,7 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     self.navigationItem.rightBarButtonItems = rightButtons;
 }
 
+#pragma mark Utilities
 - (void)fillCardDetails {
     if (self.card != nil) {
         self.title = self.card.cardName;
@@ -101,35 +102,6 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     [self fillCardDetails];
 }
    
-- (void)editCard {
-    ICCardEditViewController* addCardController = [self.storyboard instantiateViewControllerWithIdentifier:kCardEditViewControllerStoryBoardID];
-    addCardController.card = self.card;
-    [addCardController setCardType:self.card.type];
-    [self.navigationController pushViewController:addCardController animated:YES];
-}
-
-- (void) deleteCard {
-    [[[ICCoreDataStack defaultStack] managedObjectContext] deleteObject:self.card];
-    [[ICCoreDataStack defaultStack] saveContext];
-    [self.navigationController popViewControllerAnimated:YES];
-}
-
-- (void)shareCard {
-    NSString* message = [NSString stringWithFormat:@"\n Name: %@\n"
-                           "\n Number: %@\n"
-                           "\n Issued on: %@\n"
-                           "\n Expiry on: %@\n", self.card.name, self.card.number, self.startDateLabel.text, self.endDateLabel.text];
-    NSArray* objectsToShare = @[message, [UIImage imageWithData:self.card.frontImage], [UIImage imageWithData:self.card.backImage]];
-    NSArray *excludedActivities = @[UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
-                                    UIActivityTypePostToWeibo, UIActivityTypeAssignToContact,
-                                    UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
-                                    UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-    controller.excludedActivityTypes = excludedActivities;
-                                
-    [self presentViewController:controller animated:YES completion:nil];
-}
-
 - (NSString*)getStartDateString {
     NSDate *date = [NSDate dateWithTimeIntervalSince1970:self.card.startDate];
     NSCalendar *calendar = [NSCalendar currentCalendar];
@@ -151,6 +123,36 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     NSInteger year = [components year];
     
     return [NSString stringWithFormat:@"%@ - %@ - %@",[@(day) stringValue], [@(month) stringValue], [@(year) stringValue]];
+}
+
+#pragma mark Responders, Events
+- (void)editCard {
+    ICCardEditViewController* addCardController = [self.storyboard instantiateViewControllerWithIdentifier:kCardEditViewControllerStoryBoardID];
+    addCardController.card = self.card;
+    [addCardController setCardType:self.card.type];
+    [self.navigationController pushViewController:addCardController animated:YES];
+}
+
+- (void) deleteCard {
+    [[[ICCoreDataStack defaultStack] managedObjectContext] deleteObject:self.card];
+    [[ICCoreDataStack defaultStack] saveContext];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)shareCard {
+    NSString* message = [NSString stringWithFormat:@"\n Name: %@\n"
+                         "\n Number: %@\n"
+                         "\n Issued on: %@\n"
+                         "\n Expiry on: %@\n", self.card.name, self.card.number, self.startDateLabel.text, self.endDateLabel.text];
+    NSArray* objectsToShare = @[message, [UIImage imageWithData:self.card.frontImage], [UIImage imageWithData:self.card.backImage]];
+    NSArray *excludedActivities = @[UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
+                                    UIActivityTypePostToWeibo, UIActivityTypeAssignToContact,
+                                    UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+                                    UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
+    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+    controller.excludedActivityTypes = excludedActivities;
+    
+    [self presentViewController:controller animated:YES completion:nil];
 }
 
 - (void)openBackImage:(UITapGestureRecognizer*)gesture {

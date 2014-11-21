@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		F40E65971A1BD4FB00BFDBD1 /* ICCard.m in Sources */ = {isa = PBXBuildFile; fileRef = F40E65961A1BD4FB00BFDBD1 /* ICCard.m */; };
 		F40E659D1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40E659C1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m */; };
+		F432389F1A1F40330036B53D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F432389E1A1F40330036B53D /* Security.framework */; };
+		F43238A11A1F403B0036B53D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43238A01A1F403B0036B53D /* MobileCoreServices.framework */; };
+		F43238A61A1F499C0036B53D /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F43238A51A1F499C0036B53D /* KeychainWrapper.m */; };
+		F43238AC1A1F6DEB0036B53D /* ICNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43238AB1A1F6DEB0036B53D /* ICNotificationView.m */; };
 		F43B9A001A18B40500CB8629 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B99FF1A18B40500CB8629 /* main.m */; };
 		F43B9A031A18B40500CB8629 /* ICAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A021A18B40500CB8629 /* ICAppDelegate.m */; };
 		F43B9A061A18B40500CB8629 /* InstaCard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A041A18B40500CB8629 /* InstaCard.xcdatamodeld */; };
@@ -40,6 +44,13 @@
 		F40E659B1A1C5FFC00BFDBD1 /* ICCardDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardDetailViewController.h; sourceTree = "<group>"; };
 		F40E659C1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardDetailViewController.m; sourceTree = "<group>"; };
 		F432389D1A1F3B300036B53D /* InstaCard_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstaCard_Prefix.pch; sourceTree = "<group>"; };
+		F432389E1A1F40330036B53D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		F43238A01A1F403B0036B53D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		F43238A31A1F48FC0036B53D /* ICConstants.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICConstants.h; sourceTree = "<group>"; };
+		F43238A41A1F499C0036B53D /* KeychainWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainWrapper.h; sourceTree = "<group>"; };
+		F43238A51A1F499C0036B53D /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
+		F43238AA1A1F6DEB0036B53D /* ICNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICNotificationView.h; sourceTree = "<group>"; };
+		F43238AB1A1F6DEB0036B53D /* ICNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICNotificationView.m; sourceTree = "<group>"; };
 		F43B99FA1A18B40500CB8629 /* InstaCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43B99FE1A18B40500CB8629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F43B99FF1A18B40500CB8629 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -71,6 +82,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F43238A11A1F403B0036B53D /* MobileCoreServices.framework in Frameworks */,
+				F432389F1A1F40330036B53D /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,9 +97,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F43238A21A1F40480036B53D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F43238A01A1F403B0036B53D /* MobileCoreServices.framework */,
+				F432389E1A1F40330036B53D /* Security.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F43B99F11A18B40500CB8629 = {
 			isa = PBXGroup;
 			children = (
+				F43238A21A1F40480036B53D /* Frameworks */,
 				F43B99FC1A18B40500CB8629 /* InstaCard */,
 				F43B9A191A18B40500CB8629 /* InstaCardTests */,
 				F43B99FB1A18B40500CB8629 /* Products */,
@@ -128,6 +151,11 @@
 				F40E659C1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m */,
 				F497C29E1A1E61BE00838661 /* ICImageViewController.h */,
 				F497C29F1A1E61BE00838661 /* ICImageViewController.m */,
+				F43238A31A1F48FC0036B53D /* ICConstants.h */,
+				F43238A41A1F499C0036B53D /* KeychainWrapper.h */,
+				F43238A51A1F499C0036B53D /* KeychainWrapper.m */,
+				F43238AA1A1F6DEB0036B53D /* ICNotificationView.h */,
+				F43238AB1A1F6DEB0036B53D /* ICNotificationView.m */,
 			);
 			path = InstaCard;
 			sourceTree = "<group>";
@@ -266,8 +294,10 @@
 				F43B9A2D1A1918E800CB8629 /* ICCardEditViewController.m in Sources */,
 				F43B9A031A18B40500CB8629 /* ICAppDelegate.m in Sources */,
 				F43B9A091A18B40500CB8629 /* ICCardViewController.m in Sources */,
+				F43238AC1A1F6DEB0036B53D /* ICNotificationView.m in Sources */,
 				F43B9A291A18B82200CB8629 /* ICCoreDataStack.m in Sources */,
 				F4F29B4D1A1A50DA00A14CD6 /* ICUtils.m in Sources */,
+				F43238A61A1F499C0036B53D /* KeychainWrapper.m in Sources */,
 				F43B9A301A19197100CB8629 /* ICCardCell.m in Sources */,
 				F43B9A001A18B40500CB8629 /* main.m in Sources */,
 			);
