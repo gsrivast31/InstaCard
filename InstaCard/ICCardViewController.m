@@ -118,14 +118,13 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     [self addDefaultCard:@"Hypercity" icon:@"loyalty" type:ICLoyalty inContext:context];
     [self addDefaultCard:@"Jet Privilege" icon:@"loyalty" type:ICLoyalty inContext:context];
     [self addDefaultCard:@"Louis Phillippe" icon:@"loyalty" type:ICLoyalty inContext:context];
-    [self addDefaultCard:@"Marks & Spencers" icon:@"loyalty" type:ICLoyalty inContext:context];
+    [self addDefaultCard:@"Pantaloons" icon:@"loyalty" type:ICLoyalty inContext:context];
     [self addDefaultCard:@"Reliance" icon:@"loyalty" type:ICLoyalty inContext:context];
     [self addDefaultCard:@"Religare" icon:@"loyalty" type:ICLoyalty inContext:context];
     [self addDefaultCard:@"Shoppers Stop" icon:@"loyalty" type:ICLoyalty inContext:context];
     [self addDefaultCard:@"Van Heusen" icon:@"loyalty" type:ICLoyalty inContext:context];
     [self addDefaultCard:@"Westside" icon:@"loyalty" type:ICLoyalty inContext:context];
 }
-
 - (void)insertDefaultPolicyCards:(NSManagedObjectContext*)context {
     [self addDefaultCard:@"PPF" icon:@"policies" type:ICPolicy inContext:context];
     [self addDefaultCard:@"Mutual Funds" icon:@"policies" type:ICPolicy inContext:context];
