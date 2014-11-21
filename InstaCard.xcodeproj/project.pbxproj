@@ -39,6 +39,7 @@
 		F40E65961A1BD4FB00BFDBD1 /* ICCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCard.m; sourceTree = "<group>"; };
 		F40E659B1A1C5FFC00BFDBD1 /* ICCardDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardDetailViewController.h; sourceTree = "<group>"; };
 		F40E659C1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardDetailViewController.m; sourceTree = "<group>"; };
+		F432389D1A1F3B300036B53D /* InstaCard_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InstaCard_Prefix.pch; sourceTree = "<group>"; };
 		F43B99FA1A18B40500CB8629 /* InstaCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43B99FE1A18B40500CB8629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F43B99FF1A18B40500CB8629 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -136,6 +137,7 @@
 			children = (
 				F43B99FE1A18B40500CB8629 /* Info.plist */,
 				F43B99FF1A18B40500CB8629 /* main.m */,
+				F432389D1A1F3B300036B53D /* InstaCard_Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -390,7 +392,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: GAURAV SRIVASTAVA (PA7VBLG2A8)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = InstaCard/InstaCard_Prefix.pch;
 				INFOPLIST_FILE = InstaCard/Info.plist;
+				INFOPLIST_PREFIX_HEADER = InstaCard/InstaCard_Prefix.pch;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -403,7 +408,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: GAURAV SRIVASTAVA (PA7VBLG2A8)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = InstaCard/InstaCard_Prefix.pch;
 				INFOPLIST_FILE = InstaCard/Info.plist;
+				INFOPLIST_PREFIX_HEADER = InstaCard/InstaCard_Prefix.pch;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

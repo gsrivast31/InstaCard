@@ -57,6 +57,9 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     
     UIBarButtonItem* deleteButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(deleteCard)];
     
+    editButtonItem.tintColor = shareButtonItem.tintColor = deleteButtonItem.tintColor = [UIColor blackColor];
+    
+    self.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
     NSArray* rightButtons = @[shareButtonItem, editButtonItem, deleteButtonItem];
     self.navigationItem.rightBarButtonItems = rightButtons;
 }

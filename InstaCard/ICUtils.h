@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 GAURAV SRIVASTAVA. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 typedef NS_ENUM(int16_t, ICCardType) {
     ICPersonal = 0,
     ICBankCredit = 1,

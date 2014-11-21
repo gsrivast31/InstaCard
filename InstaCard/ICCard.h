@@ -6,9 +6,7 @@
 //  Copyright (c) 2014 GAURAV SRIVASTAVA. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-
 
 @interface ICCard : NSManagedObject
 

@@ -14,7 +14,9 @@
 #import "ICCardCell.h"
 #import "ICUtils.h"
 
-@interface ICCardViewController () <NSFetchedResultsControllerDelegate>
+#import <MessageUI/MessageUI.h>
+
+@interface ICCardViewController () <NSFetchedResultsControllerDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
 
@@ -59,6 +61,11 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     }
     
     [self setViewTitle];
+    
+    UIBarButtonItem* settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
+    
+    settingsButtonItem.tintColor = [UIColor blackColor];
+    self.navigationItem.leftBarButtonItem = settingsButtonItem;
 }
 
 - (void)setViewType:(int16_t)type {
@@ -381,5 +388,88 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     addCardController.card = nil;
     [addCardController setCardType:_viewType];
     [self.navigationController pushViewController:addCardController animated:YES];
+}
+
+#pragma mark Settings
+
+- (void)openSettings {
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Set PIN", @"Tell a Friend", @"Feedback", nil];
+    
+    [actionSheet showInView:self.view];
+}
+
+- (void)setPIN {
+    
+}
+
+- (void)mailComposeController:(MFMailComposeViewController*)mailController didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    
+    [self becomeFirstResponder];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)tellAFriend {
+    if([MFMailComposeViewController canSendMail] == NO)
+    {
+        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"No mail account configured!"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+        [errorAlert show];
+        return;
+    }
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+    
+    [picker setSubject: [NSString stringWithFormat: @"%s", APP_NAME]];
+    
+    // Fill out the email body text
+    NSString *deviceType = [UIDevice currentDevice].model;
+    NSString *emailBody = [NSString stringWithFormat: @"%s on %@", VERSION_STR, deviceType];
+    [picker setMessageBody:emailBody isHTML:NO];
+    
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (void)provideFeedback {
+    if([MFMailComposeViewController canSendMail] == NO)
+    {
+        UIAlertView *errorAlert = [[UIAlertView alloc] initWithTitle:@"Error"
+                                                             message:@"No mail account configured!"
+                                                            delegate:nil
+                                                   cancelButtonTitle:@"OK"
+                                                   otherButtonTitles:nil];
+        [errorAlert show];
+        return;
+    }
+    MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+    picker.mailComposeDelegate = self;
+    
+    [picker setSubject: [NSString stringWithFormat: @"%s", APP_NAME]];
+    
+    [picker setToRecipients:@[[NSString stringWithFormat: @"%s", APP_EMAIL]]];
+    
+    // Fill out the email body text
+    NSString *deviceType = [UIDevice currentDevice].model;
+    NSString *emailBody = [NSString stringWithFormat: @"%s on %@", VERSION_STR, deviceType];
+    [picker setMessageBody:emailBody isHTML:NO];
+    
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
+    if (buttonIndex != actionSheet.cancelButtonIndex) {
+        NSInteger firstOtherIndex = actionSheet.firstOtherButtonIndex;
+        
+        if (buttonIndex == firstOtherIndex) {
+            [self setPIN];
+        } else if (buttonIndex == firstOtherIndex + 1) {
+            [self tellAFriend];
+        } else if (buttonIndex == firstOtherIndex + 2) {
+            [self provideFeedback];
+        }
+    }
 }
 @end

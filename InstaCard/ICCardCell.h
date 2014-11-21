@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 GAURAV SRIVASTAVA. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
-
 @class ICCard;
 
 @interface ICCardCell : UICollectionViewCell
