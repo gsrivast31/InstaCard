@@ -97,6 +97,18 @@ static NSString *kCardEntity = @"ICCard";
     [backTouchGesture setNumberOfTapsRequired:1];
     [self.backImageView setUserInteractionEnabled:YES];
     [self.backImageView addGestureRecognizer:backTouchGesture];
+    
+    if(!self.navigationItem.leftBarButtonItem && [self.navigationController.viewControllers count] > 1) {
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [backButton setImage:[[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [backButton setTitle:self.navigationItem.backBarButtonItem.title forState:UIControlStateNormal];
+        [backButton addTarget:self action:@selector(dismissSelf) forControlEvents:UIControlEventTouchUpInside];
+        [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10.0f, 0, 0)];
+        [backButton setAdjustsImageWhenHighlighted:NO];
+        
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+        [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
+    }
 }
 
 - (void)didReceiveMemoryWarning {

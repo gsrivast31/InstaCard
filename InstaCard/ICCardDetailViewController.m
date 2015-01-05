@@ -40,6 +40,18 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     [backTouchGesture setNumberOfTapsRequired:1];
     [self.backImageView setUserInteractionEnabled:YES];
     [self.backImageView addGestureRecognizer:backTouchGesture];
+    
+    if(!self.navigationItem.leftBarButtonItem && [self.navigationController.viewControllers count] > 1) {
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [backButton setImage:[[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [backButton setTitle:self.navigationItem.backBarButtonItem.title forState:UIControlStateNormal];
+        [backButton addTarget:self action:@selector(dismissSelf) forControlEvents:UIControlEventTouchUpInside];
+        [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10.0f, 0, 0)];
+        [backButton setAdjustsImageWhenHighlighted:NO];
+        
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+        [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
+    }
 }
 
 - (void) dealloc {
@@ -48,6 +60,10 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+}
+
+- (void)dismissSelf {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)setRightBarButtonItems {
@@ -62,6 +78,8 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     self.navigationItem.backBarButtonItem.tintColor = [UIColor blackColor];
     NSArray* rightButtons = @[shareButtonItem, editButtonItem, deleteButtonItem];
     self.navigationItem.rightBarButtonItems = rightButtons;
+    
+    NSLog(@"%f %f", editButtonItem.image.size.width, editButtonItem.image.size.height);
 }
 
 #pragma mark Utilities
@@ -125,6 +143,10 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
     return [NSString stringWithFormat:@"%@ - %@ - %@",[@(day) stringValue], [@(month) stringValue], [@(year) stringValue]];
 }
 
+- (BOOL)isValid:(NSString*)string {
+    return string && ![string isEqualToString:@""];
+}
+
 #pragma mark Responders, Events
 - (void)editCard {
     ICCardEditViewController* addCardController = [self.storyboard instantiateViewControllerWithIdentifier:kCardEditViewControllerStoryBoardID];
@@ -140,19 +162,30 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 }
 
 - (void)shareCard {
-    NSString* message = [NSString stringWithFormat:@"\n Name: %@\n"
-                         "\n Number: %@\n"
-                         "\n Issued on: %@\n"
-                         "\n Expiry on: %@\n", self.card.name, self.card.number, self.startDateLabel.text, self.endDateLabel.text];
-    NSArray* objectsToShare = @[message, [UIImage imageWithData:self.card.frontImage], [UIImage imageWithData:self.card.backImage]];
-    NSArray *excludedActivities = @[UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
-                                    UIActivityTypePostToWeibo, UIActivityTypeAssignToContact,
-                                    UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
-                                    UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
-    UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
-    controller.excludedActivityTypes = excludedActivities;
+    NSString* message = @"";
+    if ([self isValid:self.card.name]) message = [message stringByAppendingFormat:@"\n Name: %@\n", self.card.name];
+    if ([self isValid:self.card.number]) message = [message stringByAppendingFormat:@"\n Number: %@\n", self.card.name];
+    if (self.card.startDate) message = [message stringByAppendingFormat:@"\n Issued on: %@\n", self.startDateLabel.text];
+    if (self.card.endDate) message = [message stringByAppendingFormat:@"\n Expiry on: %@\n", self.endDateLabel.text];
     
-    [self presentViewController:controller animated:YES completion:nil];
+    NSMutableArray *objectsToShare = [[NSMutableArray alloc] init];
+    if ([self isValid:message]) [objectsToShare addObject:message];
+    if (self.card.frontImage) [objectsToShare addObject:[UIImage imageWithData:self.card.frontImage]];
+    if (self.card.backImage) [objectsToShare addObject:[UIImage imageWithData:self.card.backImage]];
+    
+    if ([objectsToShare count]) {
+        NSArray *excludedActivities = @[UIActivityTypePostToTwitter, UIActivityTypePostToFacebook,
+                                        UIActivityTypePostToWeibo, UIActivityTypeAssignToContact,
+                                        UIActivityTypeAddToReadingList, UIActivityTypePostToFlickr,
+                                        UIActivityTypePostToVimeo, UIActivityTypePostToTencentWeibo];
+        UIActivityViewController *controller = [[UIActivityViewController alloc] initWithActivityItems:objectsToShare applicationActivities:nil];
+        controller.excludedActivityTypes = excludedActivities;
+        
+        [self presentViewController:controller animated:YES completion:nil];
+    } else {
+        UIAlertView* alerView = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Nothing to share!!" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alerView show];
+    }
 }
 
 - (void)openBackImage:(UITapGestureRecognizer*)gesture {

@@ -3,16 +3,12 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "settings.png"
+      "filename" : "NavBarIconBack.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "settings@2x.png"
-    },
-    {
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "NavBarIconBack@2x.png"
     }
   ],
   "info" : {

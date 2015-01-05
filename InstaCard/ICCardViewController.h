@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 GAURAV SRIVASTAVA. All rights reserved.
 //
 
+#import "REMenu.h"
+
 @class ICCard;
 
 @interface ICCardViewController : UICollectionViewController
@@ -19,7 +21,9 @@
 }
 
 @property (nonatomic) int16_t viewType;
+@property (strong, readonly, nonatomic) REMenu *menu;
 
+- (void)toggleMenu;
 - (IBAction)addCard:(id)sender;
 
 @end

@@ -11,6 +11,7 @@
 #import "ICCard.h"
 #import "ICCardDetailViewController.h"
 #import "ICCardEditViewController.h"
+#import "ICExpiryReminderTableViewController.h"
 #import "ICCardCell.h"
 #import "ICUtils.h"
 #import "ICNotificationView.h"
@@ -20,9 +21,12 @@
 
 #import <MessageUI/MessageUI.h>
 
-@interface ICCardViewController () <NSFetchedResultsControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
+@interface ICCardViewController () <NSFetchedResultsControllerDelegate, UITextFieldDelegate, MFMailComposeViewControllerDelegate>
 
 @property (nonatomic, strong) NSFetchedResultsController *fetchedResultsController;
+@property (strong, readwrite, nonatomic) REMenu *menu;
+
+- (BOOL)usePin;
 
 @end
 
@@ -46,21 +50,6 @@ static NSString *tellFriendSetting = @"Tell A Friend";
 static NSString *feedbackSetting = @"Feedback";
 
 #pragma mark View lifecycle
-- (void)viewWillAppear:(BOOL)animated {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    CGFloat screenWidth = screenRect.size.width;
-    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
-    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
-    CGFloat screenHeight = screenRect.size.height - navigationBarHeight - statusBarHeight;
-    
-    CGFloat itemWidth = (screenWidth)/3.0;
-    CGFloat itemHeight = (screenHeight)/4.0;
-    UICollectionViewFlowLayout *layout = (UICollectionViewFlowLayout*)self.collectionViewLayout;
-    layout.itemSize = CGSizeMake(itemWidth, itemHeight);
-    layout.minimumInteritemSpacing = 0.0;
-    layout.minimumLineSpacing = 0.0;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -81,10 +70,120 @@ static NSString *feedbackSetting = @"Feedback";
     
     [self setViewTitle];
     
-    UIBarButtonItem* settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings"] style:UIBarButtonItemStylePlain target:self action:@selector(openSettings)];
+    if(!self.navigationItem.leftBarButtonItem && [self.navigationController.viewControllers count] > 1) {
+        UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+        [backButton setImage:[[UIImage imageNamed:@"back"] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate] forState:UIControlStateNormal];
+        [backButton setTitle:self.navigationItem.backBarButtonItem.title forState:UIControlStateNormal];
+        [backButton addTarget:self action:@selector(dismissSelf:) forControlEvents:UIControlEventTouchUpInside];
+        [backButton setImageEdgeInsets:UIEdgeInsetsMake(0, -10.0f, 0, 0)];
+        [backButton setAdjustsImageWhenHighlighted:NO];
+        
+        UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+        [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
+    } else {
+        UIBarButtonItem* settingsButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"settings"] style:UIBarButtonItemStylePlain target:self action:@selector(toggleMenu)];
+        self.navigationItem.leftBarButtonItem = settingsButtonItem;
+    }
     
-    settingsButtonItem.tintColor = [UIColor blackColor];
-    self.navigationItem.leftBarButtonItem = settingsButtonItem;
+    [self createMenu];
+}
+
+- (void)createMenu {
+    
+    self.menu = [[REMenu alloc] init];
+    
+    if (!REUIKitIsFlatMode()) {
+        self.menu.cornerRadius = 4;
+        self.menu.shadowRadius = 4;
+        self.menu.shadowColor = [UIColor blackColor];
+        self.menu.shadowOffset = CGSizeMake(0, 1);
+        self.menu.shadowOpacity = 1;
+    }
+    
+    self.menu.separatorOffset = CGSizeMake(15.0, 0.0);
+    self.menu.imageOffset = CGSizeMake(5, -1);
+    self.menu.waitUntilAnimationIsComplete = NO;
+    self.menu.badgeLabelConfigurationBlock = ^(UILabel *badgeLabel, REMenuItem *item) {
+        badgeLabel.backgroundColor = [UIColor colorWithRed:0 green:179/255.0 blue:134/255.0 alpha:1];
+        badgeLabel.layer.borderColor = [UIColor colorWithRed:0.000 green:0.648 blue:0.507 alpha:1.000].CGColor;
+    };
+    
+    [self.menu setClosePreparationBlock:^{
+    }];
+    
+    [self.menu setCloseCompletionHandler:^{
+    }];
+    
+    [self setMenuItems];
+}
+
+- (void)setMenuItems {
+    __typeof (self) __weak weakSelf = self;
+    NSInteger tag = -1;
+    NSMutableArray* itemArray = [[NSMutableArray alloc] init];
+    
+    if (![self usePin]) {
+        REMenuItem *setPINItem = [[REMenuItem alloc] initWithTitle:@"Set PIN"
+                                                             image:nil
+                                                  highlightedImage:nil
+                                                            action:^(REMenuItem *item) {
+                                                                [weakSelf setPIN];
+                                                            }];
+        setPINItem.tag = ++tag;
+        [itemArray addObject:setPINItem];
+    } else {
+        REMenuItem *resetPINItem = [[REMenuItem alloc] initWithTitle:@"Reset PIN"
+                                                               image:nil
+                                                    highlightedImage:nil
+                                                              action:^(REMenuItem *item) {
+                                                                  [weakSelf resetPIN];
+                                                              }];
+        resetPINItem.tag = ++tag;
+        [itemArray addObject:resetPINItem];
+        
+        REMenuItem *changePINItem = [[REMenuItem alloc] initWithTitle:@"Change PIN"
+                                                                image:nil
+                                                     highlightedImage:nil
+                                                               action:^(REMenuItem *item) {
+                                                                   [weakSelf changePIN];
+                                                               }];
+        changePINItem.tag = ++tag;
+        [itemArray addObject:changePINItem];
+        
+    }
+
+    REMenuItem *expiredItem = [[REMenuItem alloc] initWithTitle:@"Expiry Reminders"
+                                                            image:nil
+                                                 highlightedImage:nil
+                                                           action:^(REMenuItem *item) {
+                                                               [weakSelf showExpiryReminders];
+                                                           }];
+    expiredItem.tag = ++tag;
+    [itemArray addObject:expiredItem];
+
+    
+    REMenuItem *friendItem = [[REMenuItem alloc] initWithTitle:@"Tell a Friend"
+                                                            image:nil
+                                                 highlightedImage:nil
+                                                           action:^(REMenuItem *item) {
+                                                               [weakSelf tellAFriend];
+                                                           }];
+    friendItem.tag = ++tag;
+    [itemArray addObject:friendItem];
+    
+    
+    REMenuItem *feedbackItem = [[REMenuItem alloc] initWithTitle:@"Feedback"
+                                                              image:nil
+                                                   highlightedImage:nil
+                                                             action:^(REMenuItem *item) {
+                                                                 [weakSelf provideFeedback];
+                                                             }];
+    feedbackItem.tag = ++tag;
+    [itemArray addObject:feedbackItem];
+    
+    if (self.menu) {
+        [self.menu setItems:itemArray];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -97,6 +196,17 @@ static NSString *feedbackSetting = @"Feedback";
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dismissSelf:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)toggleMenu {
+    if (self.menu.isOpen) return [self.menu close];
+    else [self setMenuItems];
+    
+    [self.menu showFromNavigationController:self.navigationController];
 }
 
 #pragma mark Utilities
@@ -218,6 +328,26 @@ static NSString *feedbackSetting = @"Feedback";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
     return [[self.fetchedResultsController sections] count];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGFloat screenWidth = screenRect.size.width;
+    CGFloat statusBarHeight = [UIApplication sharedApplication].statusBarFrame.size.height;
+    CGFloat navigationBarHeight = self.navigationController.navigationBar.frame.size.height;
+    CGFloat screenHeight = screenRect.size.height - navigationBarHeight - statusBarHeight;
+    
+    CGFloat itemWidth = (screenWidth)/3.0;
+    CGFloat itemHeight = (screenHeight)/4.0;
+    return CGSizeMake(itemWidth, itemHeight);
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section {
+    return 0.0f;
+}
+
+- (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumInteritemSpacingForSectionAtIndex:(NSInteger)section {
+    return 0.0f;
 }
 
 #pragma mark UICollectionViewDelegate
@@ -442,19 +572,6 @@ static NSString *feedbackSetting = @"Feedback";
 
 #pragma mark Settings
 
-- (void)openSettings {
-    UIActionSheet* actionSheet = nil;
-    
-    if (![self usePin]) {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Set PIN", @"Tell a Friend", @"Feedback", nil];
-    }
-    else {
-        actionSheet = [[UIActionSheet alloc] initWithTitle:@"Settings" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Reset PIN", @"Change PIN", @"Tell a Friend", @"Feedback", nil];
-    }
-    
-    [actionSheet showInView:self.view];
-}
-
 - (void)tellAFriend {
     if([MFMailComposeViewController canSendMail] == NO)
     {
@@ -505,40 +622,17 @@ static NSString *feedbackSetting = @"Feedback";
     [self presentViewController:picker animated:YES completion:nil];
 }
 
+- (void)showExpiryReminders {
+    ICExpiryReminderTableViewController* vc = [[ICExpiryReminderTableViewController alloc] init];
+    [self.navigationController pushViewController:vc animated:YES];
+}
+
 #pragma mark MFMailComposeViewControllerDelegate
 - (void)mailComposeController:(MFMailComposeViewController*)mailController didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
     
     [self becomeFirstResponder];
     
     [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark UIActionSheetDelegate
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != actionSheet.cancelButtonIndex) {
-        NSInteger firstOtherIndex = actionSheet.firstOtherButtonIndex;
-
-        if (![self usePin]) {
-            if (buttonIndex == firstOtherIndex) {
-                [self setPIN];
-            } else if (buttonIndex == firstOtherIndex + 1) {
-                [self tellAFriend];
-            } else if (buttonIndex == firstOtherIndex + 2) {
-                [self provideFeedback];
-            }
-        }
-        else {
-            if (buttonIndex == firstOtherIndex) {
-                [self resetPIN];
-            } else if (buttonIndex == firstOtherIndex + 1) {
-                [self changePIN];
-            } else if (buttonIndex == firstOtherIndex + 2) {
-                [self tellAFriend];
-            } else if (buttonIndex == firstOtherIndex + 3) {
-                [self provideFeedback];
-            }
-        }
-    }
 }
 
 #pragma mark - Text Field + Alert View Methods

@@ -7,12 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1628007D31C065F36D780A63 /* libPods-InstaCard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D7FCE57E70B55EDE65ACA20 /* libPods-InstaCard.a */; };
 		F40E65971A1BD4FB00BFDBD1 /* ICCard.m in Sources */ = {isa = PBXBuildFile; fileRef = F40E65961A1BD4FB00BFDBD1 /* ICCard.m */; };
 		F40E659D1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40E659C1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m */; };
 		F432389F1A1F40330036B53D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F432389E1A1F40330036B53D /* Security.framework */; };
 		F43238A11A1F403B0036B53D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F43238A01A1F403B0036B53D /* MobileCoreServices.framework */; };
 		F43238A61A1F499C0036B53D /* KeychainWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = F43238A51A1F499C0036B53D /* KeychainWrapper.m */; };
 		F43238AC1A1F6DEB0036B53D /* ICNotificationView.m in Sources */ = {isa = PBXBuildFile; fileRef = F43238AB1A1F6DEB0036B53D /* ICNotificationView.m */; };
+		F435C47B1A59C63F00D76913 /* NSDate+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = F435C47A1A59C63F00D76913 /* NSDate+Extension.m */; };
+		F435C4851A59CACB00D76913 /* ICCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F435C4841A59CACB00D76913 /* ICCardCell.m */; };
+		F435C48F1A59CC1400D76913 /* ICFont.m in Sources */ = {isa = PBXBuildFile; fileRef = F435C48E1A59CC1400D76913 /* ICFont.m */; };
+		F435C4921A59D7CA00D76913 /* ICExpiryReminderTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F435C4911A59D7CA00D76913 /* ICExpiryReminderTableViewController.m */; };
 		F43B9A001A18B40500CB8629 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B99FF1A18B40500CB8629 /* main.m */; };
 		F43B9A031A18B40500CB8629 /* ICAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A021A18B40500CB8629 /* ICAppDelegate.m */; };
 		F43B9A061A18B40500CB8629 /* InstaCard.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A041A18B40500CB8629 /* InstaCard.xcdatamodeld */; };
@@ -23,7 +28,6 @@
 		F43B9A1D1A18B40500CB8629 /* InstaCardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A1C1A18B40500CB8629 /* InstaCardTests.m */; };
 		F43B9A291A18B82200CB8629 /* ICCoreDataStack.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A281A18B82200CB8629 /* ICCoreDataStack.m */; };
 		F43B9A2D1A1918E800CB8629 /* ICCardEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A2C1A1918E800CB8629 /* ICCardEditViewController.m */; };
-		F43B9A301A19197100CB8629 /* ICCardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F43B9A2F1A19197100CB8629 /* ICCardCell.m */; };
 		F497C2A01A1E61BE00838661 /* ICImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F497C29F1A1E61BE00838661 /* ICImageViewController.m */; };
 		F4F29B4D1A1A50DA00A14CD6 /* ICUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F29B4C1A1A50DA00A14CD6 /* ICUtils.m */; };
 /* End PBXBuildFile section */
@@ -39,6 +43,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84585DE5476BF2195D51F69A /* Pods-InstaCard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaCard.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstaCard/Pods-InstaCard.release.xcconfig"; sourceTree = "<group>"; };
+		8D7FCE57E70B55EDE65ACA20 /* libPods-InstaCard.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-InstaCard.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D470E220C1EE633DC8DBD75E /* Pods-InstaCard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstaCard.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstaCard/Pods-InstaCard.debug.xcconfig"; sourceTree = "<group>"; };
 		F40E65951A1BD4FB00BFDBD1 /* ICCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCard.h; sourceTree = "<group>"; };
 		F40E65961A1BD4FB00BFDBD1 /* ICCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCard.m; sourceTree = "<group>"; };
 		F40E659B1A1C5FFC00BFDBD1 /* ICCardDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardDetailViewController.h; sourceTree = "<group>"; };
@@ -51,6 +58,14 @@
 		F43238A51A1F499C0036B53D /* KeychainWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainWrapper.m; sourceTree = "<group>"; };
 		F43238AA1A1F6DEB0036B53D /* ICNotificationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICNotificationView.h; sourceTree = "<group>"; };
 		F43238AB1A1F6DEB0036B53D /* ICNotificationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICNotificationView.m; sourceTree = "<group>"; };
+		F435C4791A59C63F00D76913 /* NSDate+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Extension.h"; sourceTree = "<group>"; };
+		F435C47A1A59C63F00D76913 /* NSDate+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Extension.m"; sourceTree = "<group>"; };
+		F435C4831A59CACB00D76913 /* ICCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardCell.h; sourceTree = "<group>"; };
+		F435C4841A59CACB00D76913 /* ICCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardCell.m; sourceTree = "<group>"; };
+		F435C48D1A59CC1400D76913 /* ICFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICFont.h; sourceTree = "<group>"; };
+		F435C48E1A59CC1400D76913 /* ICFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICFont.m; sourceTree = "<group>"; };
+		F435C4901A59D7CA00D76913 /* ICExpiryReminderTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICExpiryReminderTableViewController.h; sourceTree = "<group>"; };
+		F435C4911A59D7CA00D76913 /* ICExpiryReminderTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICExpiryReminderTableViewController.m; sourceTree = "<group>"; };
 		F43B99FA1A18B40500CB8629 /* InstaCard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = InstaCard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F43B99FE1A18B40500CB8629 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F43B99FF1A18B40500CB8629 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -69,8 +84,6 @@
 		F43B9A2A1A18B84A00CB8629 /* ICCoreDataStack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ICCoreDataStack.h; sourceTree = "<group>"; };
 		F43B9A2B1A1918E800CB8629 /* ICCardEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardEditViewController.h; sourceTree = "<group>"; };
 		F43B9A2C1A1918E800CB8629 /* ICCardEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardEditViewController.m; sourceTree = "<group>"; };
-		F43B9A2E1A19197100CB8629 /* ICCardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICCardCell.h; sourceTree = "<group>"; };
-		F43B9A2F1A19197100CB8629 /* ICCardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICCardCell.m; sourceTree = "<group>"; };
 		F497C29E1A1E61BE00838661 /* ICImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICImageViewController.h; sourceTree = "<group>"; };
 		F497C29F1A1E61BE00838661 /* ICImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICImageViewController.m; sourceTree = "<group>"; };
 		F4F29B4B1A1A50DA00A14CD6 /* ICUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICUtils.h; sourceTree = "<group>"; };
@@ -84,6 +97,7 @@
 			files = (
 				F43238A11A1F403B0036B53D /* MobileCoreServices.framework in Frameworks */,
 				F432389F1A1F40330036B53D /* Security.framework in Frameworks */,
+				1628007D31C065F36D780A63 /* libPods-InstaCard.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,13 +111,85 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		776D06918F5463DE42EA5F43 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				D470E220C1EE633DC8DBD75E /* Pods-InstaCard.debug.xcconfig */,
+				84585DE5476BF2195D51F69A /* Pods-InstaCard.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		F43238A21A1F40480036B53D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				F43238A01A1F403B0036B53D /* MobileCoreServices.framework */,
 				F432389E1A1F40330036B53D /* Security.framework */,
+				8D7FCE57E70B55EDE65ACA20 /* libPods-InstaCard.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F435C47C1A59CAB000D76913 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F435C4831A59CACB00D76913 /* ICCardCell.h */,
+				F435C4841A59CACB00D76913 /* ICCardCell.m */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		F435C4861A59CAE300D76913 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				F43B9A041A18B40500CB8629 /* InstaCard.xcdatamodeld */,
+				F43B9A2A1A18B84A00CB8629 /* ICCoreDataStack.h */,
+				F43B9A281A18B82200CB8629 /* ICCoreDataStack.m */,
+				F40E65951A1BD4FB00BFDBD1 /* ICCard.h */,
+				F40E65961A1BD4FB00BFDBD1 /* ICCard.m */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
+		F435C4871A59CAF900D76913 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				F435C48D1A59CC1400D76913 /* ICFont.h */,
+				F435C48E1A59CC1400D76913 /* ICFont.m */,
+				F43238A41A1F499C0036B53D /* KeychainWrapper.h */,
+				F43238A51A1F499C0036B53D /* KeychainWrapper.m */,
+				F435C4791A59C63F00D76913 /* NSDate+Extension.h */,
+				F435C47A1A59C63F00D76913 /* NSDate+Extension.m */,
+				F4F29B4B1A1A50DA00A14CD6 /* ICUtils.h */,
+				F4F29B4C1A1A50DA00A14CD6 /* ICUtils.m */,
+			);
+			name = Utils;
+			sourceTree = "<group>";
+		};
+		F435C4881A59CB1200D76913 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F43238AA1A1F6DEB0036B53D /* ICNotificationView.h */,
+				F43238AB1A1F6DEB0036B53D /* ICNotificationView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		F435C4891A59CB1700D76913 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F43B9A071A18B40500CB8629 /* ICCardViewController.h */,
+				F43B9A081A18B40500CB8629 /* ICCardViewController.m */,
+				F43B9A2B1A1918E800CB8629 /* ICCardEditViewController.h */,
+				F43B9A2C1A1918E800CB8629 /* ICCardEditViewController.m */,
+				F40E659B1A1C5FFC00BFDBD1 /* ICCardDetailViewController.h */,
+				F40E659C1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m */,
+				F497C29E1A1E61BE00838661 /* ICImageViewController.h */,
+				F497C29F1A1E61BE00838661 /* ICImageViewController.m */,
+				F435C4901A59D7CA00D76913 /* ICExpiryReminderTableViewController.h */,
+				F435C4911A59D7CA00D76913 /* ICExpiryReminderTableViewController.m */,
+			);
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		F43B99F11A18B40500CB8629 = {
@@ -113,6 +199,7 @@
 				F43B99FC1A18B40500CB8629 /* InstaCard */,
 				F43B9A191A18B40500CB8629 /* InstaCardTests */,
 				F43B99FB1A18B40500CB8629 /* Products */,
+				776D06918F5463DE42EA5F43 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -128,34 +215,18 @@
 		F43B99FC1A18B40500CB8629 /* InstaCard */ = {
 			isa = PBXGroup;
 			children = (
+				F435C4891A59CB1700D76913 /* ViewControllers */,
+				F435C4881A59CB1200D76913 /* Views */,
+				F435C4871A59CAF900D76913 /* Utils */,
+				F435C4861A59CAE300D76913 /* CoreData */,
+				F435C47C1A59CAB000D76913 /* Cells */,
 				F43B9A011A18B40500CB8629 /* ICAppDelegate.h */,
 				F43B9A021A18B40500CB8629 /* ICAppDelegate.m */,
-				F43B9A071A18B40500CB8629 /* ICCardViewController.h */,
-				F43B9A081A18B40500CB8629 /* ICCardViewController.m */,
 				F43B9A0A1A18B40500CB8629 /* Main.storyboard */,
 				F43B9A0D1A18B40500CB8629 /* Images.xcassets */,
 				F43B9A0F1A18B40500CB8629 /* LaunchScreen.xib */,
-				F43B9A041A18B40500CB8629 /* InstaCard.xcdatamodeld */,
-				F43B9A2A1A18B84A00CB8629 /* ICCoreDataStack.h */,
-				F43B9A281A18B82200CB8629 /* ICCoreDataStack.m */,
 				F43B99FD1A18B40500CB8629 /* Supporting Files */,
-				F43B9A2B1A1918E800CB8629 /* ICCardEditViewController.h */,
-				F43B9A2C1A1918E800CB8629 /* ICCardEditViewController.m */,
-				F43B9A2E1A19197100CB8629 /* ICCardCell.h */,
-				F43B9A2F1A19197100CB8629 /* ICCardCell.m */,
-				F4F29B4B1A1A50DA00A14CD6 /* ICUtils.h */,
-				F4F29B4C1A1A50DA00A14CD6 /* ICUtils.m */,
-				F40E65951A1BD4FB00BFDBD1 /* ICCard.h */,
-				F40E65961A1BD4FB00BFDBD1 /* ICCard.m */,
-				F40E659B1A1C5FFC00BFDBD1 /* ICCardDetailViewController.h */,
-				F40E659C1A1C5FFC00BFDBD1 /* ICCardDetailViewController.m */,
-				F497C29E1A1E61BE00838661 /* ICImageViewController.h */,
-				F497C29F1A1E61BE00838661 /* ICImageViewController.m */,
 				F43238A31A1F48FC0036B53D /* ICConstants.h */,
-				F43238A41A1F499C0036B53D /* KeychainWrapper.h */,
-				F43238A51A1F499C0036B53D /* KeychainWrapper.m */,
-				F43238AA1A1F6DEB0036B53D /* ICNotificationView.h */,
-				F43238AB1A1F6DEB0036B53D /* ICNotificationView.m */,
 			);
 			path = InstaCard;
 			sourceTree = "<group>";
@@ -194,9 +265,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F43B9A201A18B40500CB8629 /* Build configuration list for PBXNativeTarget "InstaCard" */;
 			buildPhases = (
+				36F4222C9B3696A2F3121BD7 /* Check Pods Manifest.lock */,
 				F43B99F61A18B40500CB8629 /* Sources */,
 				F43B99F71A18B40500CB8629 /* Frameworks */,
 				F43B99F81A18B40500CB8629 /* Resources */,
+				693F8986E3BE618690B5652A /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -236,6 +309,7 @@
 				TargetAttributes = {
 					F43B99F91A18B40500CB8629 = {
 						CreatedOnToolsVersion = 6.0.1;
+						DevelopmentTeam = BRNDE8W3RV;
 					};
 					F43B9A151A18B40500CB8629 = {
 						CreatedOnToolsVersion = 6.0.1;
@@ -282,6 +356,39 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		36F4222C9B3696A2F3121BD7 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		693F8986E3BE618690B5652A /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InstaCard/Pods-InstaCard-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F43B99F61A18B40500CB8629 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -294,11 +401,14 @@
 				F43B9A2D1A1918E800CB8629 /* ICCardEditViewController.m in Sources */,
 				F43B9A031A18B40500CB8629 /* ICAppDelegate.m in Sources */,
 				F43B9A091A18B40500CB8629 /* ICCardViewController.m in Sources */,
+				F435C47B1A59C63F00D76913 /* NSDate+Extension.m in Sources */,
 				F43238AC1A1F6DEB0036B53D /* ICNotificationView.m in Sources */,
 				F43B9A291A18B82200CB8629 /* ICCoreDataStack.m in Sources */,
+				F435C4921A59D7CA00D76913 /* ICExpiryReminderTableViewController.m in Sources */,
 				F4F29B4D1A1A50DA00A14CD6 /* ICUtils.m in Sources */,
+				F435C48F1A59CC1400D76913 /* ICFont.m in Sources */,
+				F435C4851A59CACB00D76913 /* ICCardCell.m in Sources */,
 				F43238A61A1F499C0036B53D /* KeychainWrapper.m in Sources */,
-				F43B9A301A19197100CB8629 /* ICCardCell.m in Sources */,
 				F43B9A001A18B40500CB8629 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -419,9 +529,11 @@
 		};
 		F43B9A211A18B40500CB8629 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D470E220C1EE633DC8DBD75E /* Pods-InstaCard.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: GAURAV SRIVASTAVA (PA7VBLG2A8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = InstaCard/InstaCard_Prefix.pch;
 				INFOPLIST_FILE = InstaCard/Info.plist;
@@ -429,15 +541,17 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5e3e8d1-cb45-422b-8896-a1983fc9ee8d";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
 		F43B9A221A18B40500CB8629 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 84585DE5476BF2195D51F69A /* Pods-InstaCard.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: GAURAV SRIVASTAVA (PA7VBLG2A8)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = InstaCard/InstaCard_Prefix.pch;
 				INFOPLIST_FILE = InstaCard/Info.plist;
@@ -445,7 +559,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "c5e3e8d1-cb45-422b-8896-a1983fc9ee8d";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};
