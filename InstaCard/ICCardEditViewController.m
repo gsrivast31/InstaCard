@@ -109,6 +109,9 @@ static NSString *kCardEntity = @"ICCard";
         UIBarButtonItem *backBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
         [self.navigationItem setLeftBarButtonItem:backBarButtonItem];
     }
+    
+    self.view.backgroundColor = [UIColor colorWithRed:0.667 green:0.69 blue:0.722 alpha:1];
+
 }
 
 - (void)didReceiveMemoryWarning {

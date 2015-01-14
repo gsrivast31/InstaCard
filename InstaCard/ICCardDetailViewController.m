@@ -83,19 +83,23 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
 }
 
 #pragma mark Utilities
+- (BOOL)isStringValid:(NSString*)string {
+    return string && ![string isEqualToString:@""];
+}
+
 - (void)fillCardDetails {
     if (self.card != nil) {
         self.title = self.card.cardName;
         
-        if (self.card.number) {
+        if ([self isStringValid:self.card.number]) {
             self.cardNumberLabel.text = self.card.number;
         }
         
-        if (self.card.cardName) {
+        if ([self isStringValid:self.card.cardName]) {
             self.cardNameLabel.text = self.card.cardName;
         }
         
-        if (self.card.name) {
+        if ([self isStringValid:self.card.name]) {
             self.personLabel.text = self.card.name;
         }
         
@@ -193,6 +197,10 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
         ICImageViewController* backImageViewController = [[ICImageViewController alloc] init];
         backImageViewController.image = [UIImage imageWithData:self.card.backImage];
         
+        if ([self isStringValid:self.card.cardName]) {
+            backImageViewController.title = self.card.cardName;
+        }
+        
         [self.navigationController pushViewController:backImageViewController animated:YES];
     }
 }
@@ -202,6 +210,10 @@ static NSString *kCardEditViewControllerStoryBoardID = @"cardEditViewController"
         ICImageViewController* frontImageViewController = [[ICImageViewController alloc] init];
         frontImageViewController.image = [UIImage imageWithData:self.card.frontImage];
     
+        if ([self isStringValid:self.card.cardName]) {
+            frontImageViewController.title = self.card.cardName;
+        }
+
         [self.navigationController pushViewController:frontImageViewController animated:YES];
     }
 }

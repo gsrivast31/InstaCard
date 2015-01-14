@@ -26,7 +26,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="G5N-ow-8Cm">
+                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="G5N-ow-8Cm">
                                             <rect key="frame" x="33" y="33" width="40" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="1Bd-gh-y5H"/>
@@ -36,12 +36,14 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="1Bd-gh-y5H"/>
                                                     <exclude reference="4zJ-Kk-5xA"/>
                                                     <exclude reference="Bh3-II-fr5"/>
+                                                    <exclude reference="u2S-S7-iuJ"/>
                                                 </mask>
                                             </variation>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-HH-Xpq">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2ai-HH-Xpq">
                                             <rect key="frame" x="8" y="78" width="90" height="20"/>
                                             <fontDescription key="fontDescription" name="Noteworthy-Light" family="Noteworthy" pointSize="13"/>
                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -205,7 +207,7 @@
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="c5C-qo-zi4">
                                         <rect key="frame" x="20" y="5" width="100" height="100"/>
-                                        <color key="backgroundColor" red="0.75749966081442577" green="0.77607337250475872" blue="0.83179450757575757" alpha="0.96999999999999997" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="nnv-n8-Bzu"/>
                                             <constraint firstAttribute="height" constant="100" id="qB7-7Z-iPa"/>
@@ -219,7 +221,7 @@
                                     </imageView>
                                     <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LQD-So-hbJ">
                                         <rect key="frame" x="130" y="5" width="100" height="100"/>
-                                        <color key="backgroundColor" red="0.75749966081442577" green="0.77607337250475872" blue="0.83179450757575757" alpha="0.96999999999999997" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="120" id="7g7-SO-ude"/>
                                             <constraint firstAttribute="height" constant="100" id="Nrl-VH-bFC"/>
@@ -234,19 +236,19 @@
                                         </variation>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back Image" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lhr-1p-4NN">
-                                        <rect key="frame" x="139" y="113" width="82" height="18"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <rect key="frame" x="147" y="113" width="66" height="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Front Image" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nJl-Qi-lfK">
-                                        <rect key="frame" x="29" y="113" width="83" height="18"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <rect key="frame" x="37" y="113" width="67" height="15"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="lhr-1p-4NN" firstAttribute="top" secondItem="LQD-So-hbJ" secondAttribute="bottom" constant="8" id="3ov-ne-o6g"/>
                                     <constraint firstItem="c5C-qo-zi4" firstAttribute="leading" secondItem="QBQ-0o-hF7" secondAttribute="leading" constant="20" id="8OT-Of-nKZ"/>
@@ -280,7 +282,7 @@
                                 </variation>
                             </view>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.87841303661616166" green="0.87841303661616166" blue="0.87841303661616166" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Yoa-Eo-aH1" firstAttribute="top" secondItem="ciK-Kp-JQy" secondAttribute="bottom" constant="26" id="0pP-eI-eaV"/>
                             <constraint firstItem="4FS-wl-ICw" firstAttribute="top" secondItem="EGr-Wp-dwr" secondAttribute="bottom" constant="18" id="1nJ-ya-sVt"/>
