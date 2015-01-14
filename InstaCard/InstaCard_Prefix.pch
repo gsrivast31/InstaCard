@@ -14,7 +14,7 @@
 #import <UIKit/UIKit.h>
 #endif
 
-#define APP_NAME "InstaCard"
+#define APP_NAME "InstantCard"
 
 #define VERSION_MAJOR 1
 #define VERSION_MINOR 0

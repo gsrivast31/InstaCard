@@ -226,7 +226,7 @@ static NSString *feedbackSetting = @"Feedback";
             title = @"Loyalty Cards";
             break;
         default:
-            title = @"InstaCard";
+            title = @"InstantCard";
             break;
     }
     
